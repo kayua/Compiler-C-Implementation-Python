@@ -44,6 +44,11 @@ extern FILE* yyin;
 %token TRUE FALSE
 %start commands
 
+%left VALUE_INT VALUE_FLOAT VALUE_DOUBLE
+%left TRUE FALSE
+%left EQUAL NOT_EQUAL GREATER LESS GREATER_OR_EQUAL LESS_OR_EQUAL
+%left SUM SUB MUL DIV MOD EXP ASSIGN
+
 %%
 
 
@@ -357,6 +362,7 @@ numbers:
 
                 $$  = create_node(@1.first_line, 1, "float", NULL);
 	};
+
 
 %%
 
