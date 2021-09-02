@@ -39,8 +39,9 @@ extern FILE* yyin;
 %token IF FOR WHILE DO
 %token SUM SUB MUL DIV MOD EXP ASSIGN
 %token INT FLOAT CHAR BOOL DOUBLE
-%token IMPORT DEFINE VALUE_INT
-%token TRY CATCH EXCEPT TRUE FALSE
+%token VALUE_INT VALUE_FLOAT VALUE_DOUBLE
+%token IMPORT DEFINE
+%token TRUE FALSE
 %start commands
 
 %%
@@ -90,20 +91,6 @@ importExpression:
         	Node* a1  = create_node(@1.first_line, 1, ";", NULL);
         	$$  = create_node(@1.first_line, 1, "variable", $2, a1);};
 
-
-generalArithmeticExpression:
-
- 	declarationExpression SEMICOLON {
-
-        	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
-        	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1);}|
-
-       	assignmentExpression SEMICOLON{
-
-        	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
-        	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1);};
-
-
 commandIf:
 
 	IF OPENPARENTS generalExpression CLOSEPARENTS OPEN_BRACKETS commands CLOSE_BRACKETS{
@@ -121,19 +108,6 @@ defineExpression:
 
         	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
         	$$  = create_node(@1.first_line, 1, "define", $2, a1);};
-
-
-assignmentExpression:
-
-    	variable {
-
-		$$  = create_node(@1.first_line, 1, "assignment_expression", $1); }|
-
-	variable ASSIGN arithmeticOperations {
-
-        	Node* a1  = create_node(@1.first_line, 1, "variable", NULL);
-        	Node* a2  = create_node(@1.first_line, 1, "assing", NULL);
-        	$$  = create_node(@1.first_line, 1, "assignment_expression", $1,  a1, a2, $3);};
 
 
 forExpression:
@@ -173,6 +147,19 @@ doWhileExpression:
         	$$  = create_node(@1.first_line, 1, "DOWHILE", a1, $3, a2, a3, a4, $7, a5, a6);};
 
 
+generalArithmeticExpression:
+
+ 	declarationExpression SEMICOLON {
+
+        	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
+        	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1);}|
+
+       	assignmentExpression SEMICOLON{
+
+        	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
+        	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1);};
+
+
 generalExpression:
 
  	boolExpression {
@@ -182,6 +169,19 @@ generalExpression:
        	comparisonExpression{
 
         	$$  = create_node(@1.first_line, 1, "general_expression", $1);};
+
+
+assignmentExpression:
+
+    	variable {
+
+		$$  = create_node(@1.first_line, 1, "assignment_expression", $1); }|
+
+	variable ASSIGN arithmeticOperations {
+
+        	Node* a1  = create_node(@1.first_line, 1, "variable", NULL);
+        	Node* a2  = create_node(@1.first_line, 1, "assing", NULL);
+        	$$  = create_node(@1.first_line, 1, "assignment_expression", $1,  a1, a2, $3);};
 
 
 boolExpression:
@@ -347,8 +347,16 @@ numbers:
 
  	VALUE_INT {
 
- 		$$  = create_node(@1.first_line, 1, "int", NULL);};
+ 		$$  = create_node(@1.first_line, 1, "int", NULL);}|
 
+	VALUE_FLOAT {
+
+		$$  = create_node(@1.first_line, 1, "float", NULL);}|
+
+	VALUE_DOUBLE{
+
+                $$  = create_node(@1.first_line, 1, "float", NULL);
+	};
 
 %%
 
