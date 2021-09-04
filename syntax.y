@@ -1,11 +1,43 @@
 %{
-#include "node.h"
-#include <stdio.h>
-#include <string.h>
-int yydebug=0;
-extern int yylex();
-extern Node * syntax_tree;
-extern FILE* yyin;
+
+	#include "node.h"
+	#include <stdio.h>
+	#include <string.h>
+	#include "lista.h"
+
+	int yydebug=0;
+	extern int yylex();
+	extern Node * syntax_tree;
+	extern FILE* yyin;
+	extern symbol_t *symbol_table;
+
+
+	void checking_table(char* lx, char* type){
+
+        	if(lookup(*symbol_table, lx)){
+
+        		return 1;
+
+        	}
+
+        	return 0;
+
+	}
+
+	int add_symbol_table(char* lx, char* type){
+
+               	if(insert(& *symbol_table, novo(lx, type)) != 0){
+
+			return 1;
+
+		}
+
+		return 0;
+
+        }
+
+
+
 
 %}
 
@@ -42,22 +74,27 @@ extern FILE* yyin;
 %token VALUE_INT VALUE_FLOAT VALUE_DOUBLE
 %token IMPORT DEFINE
 %token TRUE FALSE
-%start commands
+%start cmd
 
 %left VALUE_INT VALUE_FLOAT VALUE_DOUBLE
 %left TRUE FALSE
 %left EQUAL NOT_EQUAL GREATER LESS GREATER_OR_EQUAL LESS_OR_EQUAL
 %left SUM SUB MUL DIV MOD EXP ASSIGN
 
+
 %%
 
+cmd: commands{
+
+	$$ = create_node(@1.first_line, 1, "command", $1, NULL);
+
+	syntax_tree = $$;};
 
 commands:
 
 	importExpression {
 
 		$$ = create_node(@1.first_line, 1, "import_expression", NULL); syntax_tree = $$;} |
-
 
 	generalArithmeticExpression {
 
@@ -66,27 +103,27 @@ commands:
 
 	commandIf {
 
-		$$ = create_node(@1.first_line, 1, "command_if", $1);  syntax_tree = $$;}|
+		$$ = create_node(@1.first_line, 1, "command_if", $1, NULL);  syntax_tree = $$;}|
 
 
 	whileExpression {
 
-		$$ = create_node(@1.first_line, 1, "while", $1);  syntax_tree = $$;}|
+		$$ = create_node(@1.first_line, 1, "while", $1, NULL);  syntax_tree = $$;}|
 
 
 	doWhileExpression {
 
-                $$ = create_node(@1.first_line, 1, "do_while", $1);  syntax_tree = $$;}|
+                $$ = create_node(@1.first_line, 1, "do_while", $1, NULL);  syntax_tree = $$;}|
 
 
 	forExpression {
 
-                $$ = create_node(@1.first_line, 1, "for", $1);  syntax_tree = $$;}|
+                $$ = create_node(@1.first_line, 1, "for", $1, NULL);  syntax_tree = $$;}|
 
 
 	defineExpression {
 
-        		$$ = create_node(@1.first_line, 1, "define", $1);  syntax_tree = $$;};
+        		$$ = create_node(@1.first_line, 1, "define", $1, NULL);  syntax_tree = $$;};
 
 
 importExpression:
@@ -94,7 +131,8 @@ importExpression:
  	IMPORT variable SEMICOLON {
 
         	Node* a1  = create_node(@1.first_line, 1, ";", NULL);
-        	$$  = create_node(@1.first_line, 1, "variable", $2, a1);};
+        	$$  = create_node(@1.first_line, 1, "variable", $2, a1, NULL);};
+
 
 commandIf:
 
@@ -104,7 +142,7 @@ commandIf:
         	Node* a2  = create_node(@1.first_line, NULL, ")", NULL);
         	Node* a3  = create_node(@1.first_line, NULL, "{", NULL);
         	Node* a4  = create_node(@1.first_line, NULL, "}", NULL);
-        	$$  = create_node(@1.first_line, 1, "command_if", a1, $3 ,a2, a3, $6 ,a4);};
+        	$$  = create_node(@1.first_line, 1, "command_if", a1, $3 ,a2, a3, $6 ,a4, NULL);};
 
 
 defineExpression:
@@ -112,7 +150,7 @@ defineExpression:
  	DEFINE assignmentExpression SEMICOLON {
 
         	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
-        	$$  = create_node(@1.first_line, 1, "define", $2, a1);};
+        	$$  = create_node(@1.first_line, 1, "define", $2, a1, NULL);};
 
 
 forExpression:
@@ -125,7 +163,7 @@ forExpression:
         	Node* a4  = create_node(@1.first_line, NULL, ")", NULL);
         	Node* a5  = create_node(@1.first_line, NULL, "{", NULL);
         	Node* a6  = create_node(@1.first_line, NULL, "}", NULL);
-        	$$  = create_node(@1.first_line, 1, "FOR", a1, $3 ,$4, a2, $6 , a4, a5, $9, a6);};
+        	$$  = create_node(@1.first_line, 1, "FOR", a1, $3 ,$4, a2, $6 , a4, a5, $9, a6, NULL);};
 
 
 whileExpression:
@@ -136,7 +174,7 @@ whileExpression:
         	Node* a2  = create_node(@1.first_line, NULL, ")", NULL);
         	Node* a3  = create_node(@1.first_line, NULL, "{", NULL);
         	Node* a4  = create_node(@1.first_line, NULL, "}", NULL);
-        	$$  = create_node(@1.first_line, 1, "WHILE", a1, $3, a2, a3, $6, a4);};
+        	$$  = create_node(@1.first_line, 1, "WHILE", a1, $3, a2, a3, $6, a4, NULL);};
 
 
 doWhileExpression:
@@ -149,7 +187,7 @@ doWhileExpression:
         	Node* a4  = create_node(@1.first_line, NULL, "(", NULL);
         	Node* a5  = create_node(@1.first_line, NULL, ")", NULL);
         	Node* a6  = create_node(@1.first_line, NULL, ";", NULL);
-        	$$  = create_node(@1.first_line, 1, "DOWHILE", a1, $3, a2, a3, a4, $7, a5, a6);};
+        	$$  = create_node(@1.first_line, 1, "DOWHILE", a1, $3, a2, a3, a4, $7, a5, a6, NULL);};
 
 
 generalArithmeticExpression:
@@ -157,89 +195,93 @@ generalArithmeticExpression:
  	declarationExpression SEMICOLON {
 
         	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
-        	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1);}|
+        	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1, NULL);}|
 
        	assignmentExpression SEMICOLON{
 
         	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
-        	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1);};
+        	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1, NULL);};
 
 
 generalExpression:
 
  	boolExpression {
 
-        	$$  = create_node(@1.first_line, 1, "general_expression", $1);}|
+        	$$  = create_node(@1.first_line, 1, "general_expression", $1, NULL);}|
 
        	comparisonExpression{
 
-        	$$  = create_node(@1.first_line, 1, "general_expression", $1);};
+        	$$  = create_node(@1.first_line, 1, "general_expression", $1, NULL);};
 
 
 assignmentExpression:
 
     	variable {
 
-		$$  = create_node(@1.first_line, 1, "assignment_expression", $1); }|
+		$$  = create_node(@1.first_line, 1, "assignment_expression", $1, NULL);}|
 
 	variable ASSIGN arithmeticOperations {
 
         	Node* a1  = create_node(@1.first_line, 1, "variable", NULL);
         	Node* a2  = create_node(@1.first_line, 1, "assing", NULL);
-        	$$  = create_node(@1.first_line, 1, "assignment_expression", $1,  a1, a2, $3);};
+        	$$  = create_node(@1.first_line, 1, "assignment_expression", $1,  a1, a2, $3, NULL);};
 
 
 boolExpression:
 
  	boolExpression boolOperators boolExpression {
 
-        	$$  = create_node(@1.first_line, 1, "bool_expression", $1, $2, $3);}|
+        	$$  = create_node(@1.first_line, 1, "bool_expression", $1, $2, $3, NULL);}|
 
 	bool {
 
-        	$$  = create_node(@1.first_line, 1, "bool", $1);}|
+        	$$  = create_node(@1.first_line, 1, "bool", $1, NULL);}|
 
         boolOperators {
 
-                $$  = create_node(@1.first_line, 1, "bool_expression", $1);};
+                $$  = create_node(@1.first_line, 1, "bool_expression", $1, NULL);};
 
 
 comparisonExpression:
 
  	comparisonExpression comparisonOperators comparisonExpression{
 
-        	$$  = create_node(@1.first_line, 1, "comparison_expression", $1, $2, $3);}|
+        	$$  = create_node(@1.first_line, 1, "comparison_expression", $1, $2, $3, NULL);}|
 
        	variable{
 
-        	$$  = create_node(@1.first_line, 1, "variable", $1);}|
+        	$$  = create_node(@1.first_line, 1, "variable", $1, NULL);}|
 
        	NOT variable{
 
         	Node* a1  = create_node(@1.first_line, 1, "NOT", NULL);
-        	$$  = create_node(@1.first_line, 1, "boolExpression", a1, $2);};
+        	$$  = create_node(@1.first_line, 1, "boolExpression", a1, $2, NULL);};
 
 
 arithmeticOperations:
 
  	arithmeticOperations arithmeticOperators arithmeticOperations{
 
-        	$$  = create_node(@1.first_line, 1, "arithmetic_operations", $1, $2, $3);}|
+        	$$  = create_node(@1.first_line, 1, "arithmetic_operations", $1, $2, $3, NULL);}|
 
        	variable{
 
-       		$$  = create_node(@1.first_line, 1, "arithmetic_operations", $1);}|
+       		$$  = create_node(@1.first_line, 1, "arithmetic_operations", $1, NULL);}|
 
        	numbers{
 
-       		$$  = create_node(@1.first_line, 1, "numbers", $1);};
+       		$$  = create_node(@1.first_line, 1, "numbers", $1, NULL);};
 
 
 declarationExpression:
 
  	declarationTypes assignmentExpression {
 
-        	$$  = create_node(@1.first_line, 1, "declaration_expression", $1, $2);};
+        	$$  = create_node(@1.first_line, 1, "declaration_expression", $1, $2, NULL);
+
+        	checking_table($2->lexeme, $1->lexeme);
+
+        	};
 
 
 comparisonOperators:
