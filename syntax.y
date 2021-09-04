@@ -14,8 +14,6 @@
 	int temps_size=0;
 	int lex_size=0;
 
-	symbol_table = (symbol_t*)malloc(sizeof(symbol_t));
-
 	entry_t* create_new_symbol(char *lx, char *type){
 
         	entry_t* new_entry = (entry_t *) malloc(sizeof(entry_t));
