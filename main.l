@@ -18,9 +18,6 @@
 "while"                    return WHILE;
 "define"                   return DEFINE;
 "do"                       return DO;
-"try"                      return TRY;
-"catch"                    return CATCH;
-"except"                   return EXCEPT;
 "and"                      return AND;
 "or"                       return OR;
 "not"                      return NOT;

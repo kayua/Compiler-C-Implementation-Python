@@ -3,30 +3,43 @@
 	#include "node.h"
 	#include <stdio.h>
 	#include <string.h>
-	#include "lista.h"
+	#include "symbol_table.h"
 
 	int yydebug=0;
 	extern int yylex();
 	extern Node * syntax_tree;
 	extern FILE* yyin;
 	extern symbol_t *symbol_table;
+	int vars_size=0;
+	int temps_size=0;
+	int lex_size=0;
 
-
-	void checking_table(char* lx, char* type){
+	int checking_table(char* lx, char* type){
 
         	if(lookup(*symbol_table, lx)){
 
-        		return 1;
+        		return 0;
 
         	}
 
-        	return 0;
+        	return 1;
 
 	}
 
+	entry_t* create_new_symbol(char *lx, char *type){
+
+        	entry_t* new_entry = (entry_t *) malloc(sizeof(entry_t));
+        	new_entry->name = lx;
+       		new_entry->desloc = vars_size;
+        	new_entry->size = 4;
+        	vars_size += 4;
+       		return new_entry;
+
+        }
+
 	int add_symbol_table(char* lx, char* type){
 
-               	if(insert(& *symbol_table, novo(lx, type)) != 0){
+               	if(insert(& *symbol_table, create_new_symbol(lx, type)) != 0){
 
 			return 1;
 
@@ -35,8 +48,6 @@
 		return 0;
 
         }
-
-
 
 
 %}
@@ -48,7 +59,6 @@
 %type<no> forExpression
 %type<no> importExpression
 %type<no> whileExpression
-%type<no> exceptExpression
 %type<no> doWhileExpression
 %type<no> generalArithmeticExpression
 %type<no> defineExpression
@@ -65,6 +75,7 @@
 %type<no> variable
 %type<no> numbers
 %type<no> bool
+%type<no> cmd
 
 %token WORD SEMICOLON OPENPARENTS CLOSEPARENTS OR AND NOT OPEN_BRACKETS CLOSE_BRACKETS
 %token EQUAL NOT_EQUAL GREATER LESS GREATER_OR_EQUAL LESS_OR_EQUAL
@@ -138,10 +149,10 @@ commandIf:
 
 	IF OPENPARENTS generalExpression CLOSEPARENTS OPEN_BRACKETS commands CLOSE_BRACKETS{
 
-        	Node* a1  = create_node(@1.first_line, NULL, "(", NULL);
-        	Node* a2  = create_node(@1.first_line, NULL, ")", NULL);
-        	Node* a3  = create_node(@1.first_line, NULL, "{", NULL);
-        	Node* a4  = create_node(@1.first_line, NULL, "}", NULL);
+        	Node* a1  = create_node(@1.first_line, 0, "(", NULL);
+        	Node* a2  = create_node(@1.first_line, 0, ")", NULL);
+        	Node* a3  = create_node(@1.first_line, 0, "{", NULL);
+        	Node* a4  = create_node(@1.first_line, 0, "}", NULL);
         	$$  = create_node(@1.first_line, 1, "command_if", a1, $3 ,a2, a3, $6 ,a4, NULL);};
 
 
@@ -149,7 +160,7 @@ defineExpression:
 
  	DEFINE assignmentExpression SEMICOLON {
 
-        	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
+        	Node* a1  = create_node(@1.first_line, 0, ";", NULL);
         	$$  = create_node(@1.first_line, 1, "define", $2, a1, NULL);};
 
 
@@ -158,11 +169,11 @@ forExpression:
 
 	FOR OPENPARENTS generalArithmeticExpression comparisonExpression SEMICOLON assignmentExpression CLOSEPARENTS OPEN_BRACKETS commands CLOSE_BRACKETS  {
 
-        	Node* a1  = create_node(@1.first_line, NULL, "(", NULL);
-        	Node* a2  = create_node(@1.first_line, NULL, ";", NULL);
-        	Node* a4  = create_node(@1.first_line, NULL, ")", NULL);
-        	Node* a5  = create_node(@1.first_line, NULL, "{", NULL);
-        	Node* a6  = create_node(@1.first_line, NULL, "}", NULL);
+        	Node* a1  = create_node(@1.first_line, 0, "(", NULL);
+        	Node* a2  = create_node(@1.first_line, 0, ";", NULL);
+        	Node* a4  = create_node(@1.first_line, 0, ")", NULL);
+        	Node* a5  = create_node(@1.first_line, 0, "{", NULL);
+        	Node* a6  = create_node(@1.first_line, 0, "}", NULL);
         	$$  = create_node(@1.first_line, 1, "FOR", a1, $3 ,$4, a2, $6 , a4, a5, $9, a6, NULL);};
 
 
@@ -170,10 +181,10 @@ whileExpression:
 
 	WHILE OPENPARENTS generalExpression CLOSEPARENTS OPEN_BRACKETS commands CLOSE_BRACKETS {
 
-        	Node* a1  = create_node(@1.first_line, NULL, "(", NULL);
-        	Node* a2  = create_node(@1.first_line, NULL, ")", NULL);
-        	Node* a3  = create_node(@1.first_line, NULL, "{", NULL);
-        	Node* a4  = create_node(@1.first_line, NULL, "}", NULL);
+        	Node* a1  = create_node(@1.first_line, 0, "(", NULL);
+        	Node* a2  = create_node(@1.first_line, 0, ")", NULL);
+        	Node* a3  = create_node(@1.first_line, 0, "{", NULL);
+        	Node* a4  = create_node(@1.first_line, 0, "}", NULL);
         	$$  = create_node(@1.first_line, 1, "WHILE", a1, $3, a2, a3, $6, a4, NULL);};
 
 
@@ -181,12 +192,12 @@ doWhileExpression:
 
  	DO OPEN_BRACKETS commands CLOSE_BRACKETS WHILE OPENPARENTS generalExpression CLOSEPARENTS SEMICOLON  {
 
-        	Node* a1  = create_node(@1.first_line, NULL, "{", NULL);
-        	Node* a2  = create_node(@1.first_line, NULL, "}", NULL);
-        	Node* a3  = create_node(@1.first_line, NULL, "WHILE", NULL);
-        	Node* a4  = create_node(@1.first_line, NULL, "(", NULL);
-        	Node* a5  = create_node(@1.first_line, NULL, ")", NULL);
-        	Node* a6  = create_node(@1.first_line, NULL, ";", NULL);
+        	Node* a1  = create_node(@1.first_line, 0, "{", NULL);
+        	Node* a2  = create_node(@1.first_line, 0, "}", NULL);
+        	Node* a3  = create_node(@1.first_line, 0, "WHILE", NULL);
+        	Node* a4  = create_node(@1.first_line, 0, "(", NULL);
+        	Node* a5  = create_node(@1.first_line, 0, ")", NULL);
+        	Node* a6  = create_node(@1.first_line, 0, ";", NULL);
         	$$  = create_node(@1.first_line, 1, "DOWHILE", a1, $3, a2, a3, a4, $7, a5, a6, NULL);};
 
 
@@ -194,12 +205,12 @@ generalArithmeticExpression:
 
  	declarationExpression SEMICOLON {
 
-        	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
+        	Node* a1  = create_node(@1.first_line, 0, ";", NULL);
         	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1, NULL);}|
 
        	assignmentExpression SEMICOLON{
 
-        	Node* a1  = create_node(@1.first_line, NULL, ";", NULL);
+        	Node* a1  = create_node(@1.first_line, 0, ";", NULL);
         	$$  = create_node(@1.first_line, 1, "general_arithmetic_expression", $1, a1, NULL);};
 
 
@@ -277,11 +288,20 @@ declarationExpression:
 
  	declarationTypes assignmentExpression {
 
+		printf("saida");
         	$$  = create_node(@1.first_line, 1, "declaration_expression", $1, $2, NULL);
-
         	checking_table($2->lexeme, $1->lexeme);
+		/*
+		if(checking_table($2->lexeme, $1->lexeme)){
 
-        	};
+			if(add_symbol_table($2->lexeme, $1->lexeme)){
+
+				exit(-1);
+
+			}
+	 }*/
+
+        };
 
 
 comparisonOperators:
