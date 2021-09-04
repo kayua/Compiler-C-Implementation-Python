@@ -14,17 +14,7 @@
 	int temps_size=0;
 	int lex_size=0;
 
-	int checking_table(char* lx, char* type){
-
-        	if(lookup(*symbol_table, lx)){
-
-        		return 0;
-
-        	}
-
-        	return 1;
-
-	}
+	symbol_table = (symbol_t*)malloc(sizeof(symbol_t));
 
 	entry_t* create_new_symbol(char *lx, char *type){
 
@@ -39,7 +29,7 @@
 
 	int add_symbol_table(char* lx, char* type){
 
-               	if(insert(& *symbol_table, create_new_symbol(lx, type)) != 0){
+               	if(insert(symbol_table, create_new_symbol(lx, type)) != 0){
 
 			return 1;
 
@@ -288,18 +278,11 @@ declarationExpression:
 
  	declarationTypes assignmentExpression {
 
-		printf("saida");
+
         	$$  = create_node(@1.first_line, 1, "declaration_expression", $1, $2, NULL);
-        	checking_table($2->lexeme, $1->lexeme);
-		/*
-		if(checking_table($2->lexeme, $1->lexeme)){
+        	printf("%s - %s\n", $1->lexeme, $2->lexeme);
+		add_symbol_table($2->lexeme, $1->lexeme);
 
-			if(add_symbol_table($2->lexeme, $1->lexeme)){
-
-				exit(-1);
-
-			}
-	 }*/
 
         };
 
