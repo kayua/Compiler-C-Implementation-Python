@@ -9,7 +9,8 @@
 	extern int yylex();
 	extern Node * syntax_tree;
 	extern FILE* yyin;
-	extern symbol_t *symbol_table;
+	extern struct symbol_t *tabela_simbolos;
+	tabela_simbolos = init_table(tabela_simbolos);
 	int vars_size=0;
 	int temps_size=0;
 	int lex_size=0;
@@ -25,17 +26,23 @@
 
         }
 
-	int add_symbol_table(char* lx, char* type){
+	void verifica(char* lx, char* type){
 
-               	if(insert(symbol_table, create_new_symbol(lx, type)) != 0){
+		if(lookup(*tabela_simbolos, lx)){
 
-			return 1;
+			printf("Redeclaration of the symbol %s\n",lx);
 
 		}
 
-		return 0;
+		else if(insert(& *tabela_simbolos, create_new_symbol(lx, type)) != 0){
 
-        }
+			printf("ERROR:%s\n",lx);
+			exit(0);
+
+		}
+
+	}
+
 
 
 %}
@@ -279,7 +286,7 @@ declarationExpression:
 
         	$$  = create_node(@1.first_line, 1, "declaration_expression", $1, $2, NULL);
         	printf("%s - %s\n", $1->lexeme, $2->lexeme);
-		add_symbol_table($2->lexeme, $1->lexeme);
+		verifica($2->lexeme, $1->lexeme);
 
 
         };
