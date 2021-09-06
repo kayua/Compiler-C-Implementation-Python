@@ -9,8 +9,7 @@
 	extern int yylex();
 	extern Node * syntax_tree;
 	extern FILE* yyin;
-	extern struct symbol_t *tabela_simbolos;
-	tabela_simbolos = init_table(tabela_simbolos);
+	symbol_t symbol_table;
 	int vars_size=0;
 	int temps_size=0;
 	int lex_size=0;
@@ -28,13 +27,13 @@
 
 	void verifica(char* lx, char* type){
 
-		if(lookup(*tabela_simbolos, lx)){
+		if(lookup(symbol_table, lx)){
 
 			printf("Redeclaration of the symbol %s\n",lx);
+			entry_t* aux = lookup(symbol_table,lx);
 
 		}
-
-		else if(insert(& *tabela_simbolos, create_new_symbol(lx, type)) != 0){
+		else if(insert(&symbol_table, create_new_symbol(lx, type)) != 0){
 
 			printf("ERROR:%s\n",lx);
 			exit(0);
