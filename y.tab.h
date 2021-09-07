@@ -133,7 +133,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 49 "syntax.y"
+#line 74 "syntax.y"
  char* cadeia; struct _node * no;
 
 #line 140 "y.tab.h"

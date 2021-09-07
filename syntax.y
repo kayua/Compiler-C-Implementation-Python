@@ -41,7 +41,7 @@
 
 	}
 
-	entry_t* checking_declaration_symbol(){
+	entry_t* checking_declaration_symbol(char* lx, char* type){
 
 		if(lookup(symbol_table, lx)){
 
