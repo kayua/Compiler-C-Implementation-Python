@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
-#include "../_Header/lista.h"
+#include "lista.h"
 
 int numList=1;
 

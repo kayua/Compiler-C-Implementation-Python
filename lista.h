@@ -5,6 +5,7 @@
 #define _LISTA_H_
 
 #include <stdio.h>
+#include "symbol_table.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>

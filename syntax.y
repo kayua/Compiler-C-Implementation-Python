@@ -1,6 +1,7 @@
 %{
 
 	#include "node.h"
+	#include "lista.h"
 	#include <stdio.h>
 	#include <string.h>
 	#include "symbol_table.h"
@@ -8,11 +9,14 @@
 	int yydebug=0;
 	extern int yylex();
 	extern Node * syntax_tree;
+	struct node_tac * table_TAC;
 	extern FILE* yyin;
 	symbol_t symbol_table;
 	int vars_size=0;
 	int temps_size=0;
 	int lex_size=0;
+	int Temporarias = 0;
+        int num_temp = 0;
 
 	entry_t* create_new_symbol(char *lx, char *type){
 
@@ -25,21 +29,6 @@
 
         }
 
-	void verifica(char* lx, char* type){
-
-		if(lookup(symbol_table, lx)){
-
-			entry_t* aux = lookup(symbol_table,lx);
-
-		}
-		else if(insert(&symbol_table, create_new_symbol(lx, type)) != 0){
-
-			printf("ERROR:%s\n",lx);
-			exit(0);
-
-		}
-
-	}
 
 	entry_t* checking_declaration_symbol(char* lx, char* type){
 
@@ -61,9 +50,10 @@
 
 		if(insert(&symbol_table, create_new_symbol(lx, type)) != 0){
 
-                	exit(0);
+                	return;
 
                 }
+
 
         }
 
@@ -117,8 +107,9 @@
 cmd: commands{
 
 	$$ = create_node(@1.first_line, 1, "command", $1, NULL);
+	syntax_tree = $$;
 
-	syntax_tree = $$;};
+	};
 
 commands:
 
@@ -261,7 +252,17 @@ boolExpression:
 
  	boolExpression boolOperators boolExpression {
 
-        	$$  = create_node(@1.first_line, 1, "bool_expression", $1, $2, $3, NULL);}|
+        	$$  = create_node(@1.first_line, 1, "bool_expression", $1, $2, $3, NULL);
+
+        	        char *temp=(char*)malloc(8*sizeof(char));
+                     	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
+                       	printf("%s - %s - %s\n", $1->lexeme, $2->lexeme, $3->lexeme);
+                       	free(temp);
+                     	num_temp ++;
+                       	Temporarias += 8;
+                       	append_inst_tac(&(table_TAC),new_tac);
+
+        	}|
 
 	bool {
 
@@ -276,7 +277,17 @@ comparisonExpression:
 
  	comparisonExpression comparisonOperators comparisonExpression{
 
-        	$$  = create_node(@1.first_line, 1, "comparison_expression", $1, $2, $3, NULL);}|
+        	$$  = create_node(@1.first_line, 1, "comparison_expression", $1, $2, $3, NULL);
+
+        	char *temp=(char*)malloc(8*sizeof(char));
+                struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
+               	printf("%s - %s - %s\n", $1->lexeme, $2->lexeme, $3->lexeme);
+                free(temp);
+                num_temp ++;
+               	Temporarias += 8;
+               	append_inst_tac(&(table_TAC),new_tac);
+
+        	}|
 
        	variable{
 
@@ -292,7 +303,17 @@ arithmeticOperations:
 
  	arithmeticOperations arithmeticOperators arithmeticOperations{
 
-        	$$  = create_node(@1.first_line, 1, "arithmetic_operations", $1, $2, $3, NULL);}|
+        	$$  = create_node(@1.first_line, 1, "arithmetic_operations", $1, $2, $3, NULL);
+
+        	char *temp=(char*)malloc(8*sizeof(char));
+               	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
+               	printf("%s - %s - %s\n", $1->lexeme, $2->lexeme, $3->lexeme);
+               	free(temp);
+               	num_temp ++;
+               	Temporarias += 8;
+               	append_inst_tac(&(table_TAC),new_tac);
+
+        	}|
 
        	variable{
 
@@ -309,12 +330,18 @@ declarationExpression:
 
 
         	$$  = create_node(@1.first_line, 1, "declaration_expression", $1, $2, NULL);
-        	printf("%s - %s\n", $1->lexeme, $2->lexeme);
+
         	if(checking_declaration_symbol($2->lexeme, $1->lexeme)!=NULL){
+
         		insert_in_symbol_table($2->lexeme, $1->lexeme);
+
         	}
 
-
+        	char *temp=(char*)malloc(8*sizeof(char));
+                struct tac* new_tac = create_inst_tac(temp, $1->lexeme, "=" , $2->lexeme);
+               	printf("%s - %s - %s\n", $1->lexeme, $2->lexeme, $3->lexeme);
+                free(temp);
+               	append_inst_tac(&(table_TAC),new_tac);
 
         };
 
