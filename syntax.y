@@ -29,7 +29,6 @@
 
 		if(lookup(symbol_table, lx)){
 
-			printf("Redeclaration of the symbol %s\n",lx);
 			entry_t* aux = lookup(symbol_table,lx);
 
 		}
@@ -41,6 +40,32 @@
 		}
 
 	}
+
+	entry_t* checking_declaration_symbol(){
+
+		if(lookup(symbol_table, lx)){
+
+                	entry_t* aux = lookup(symbol_table,lx);
+                        return aux;
+
+		}else{
+
+			return NULL;
+
+		}
+
+	}
+
+
+	void insert_in_symbol_table(char* lx, char* type){
+
+		if(insert(&symbol_table, create_new_symbol(lx, type)) != 0){
+
+                	exit(0);
+
+                }
+
+        }
 
 
 
