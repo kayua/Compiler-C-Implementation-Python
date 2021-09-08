@@ -35,6 +35,7 @@ void print_inst_tac(FILE* out, struct tac i){
 void print_tac(FILE* out, struct node_tac * code){
     printf("criar a função para print");
 
+
 }
 
 
