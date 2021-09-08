@@ -18,7 +18,6 @@ struct tac* create_inst_tac(const char* res, const char* arg1, const char* op, c
     new->op=malloc(sizeof(op));
     new->arg2=malloc(sizeof(arg2));
     if(new==NULL){
-        printf("Allocation Error\n");
         exit(0);
     }
     if(res!=NULL) strcpy(new->res, res);
@@ -30,53 +29,11 @@ struct tac* create_inst_tac(const char* res, const char* arg1, const char* op, c
 }
 
 void print_inst_tac(FILE* out, struct tac i){
-    printf("\nnada aqui\n");
+    printf("\n");
 }
 
 void print_tac(FILE* out, struct node_tac * code){
-
-    struct node_tac *aux = lista;
-    entry_t *aux_deslc = NULL;
-    int bytesSP = vars_size, bytesRX = temps_size;
-    char op[5], strop[5];
-
-    fprintf(out, "%d\n", bytesSP);
-    fprintf(out, "%d\n", bytesRX);
-    aux = lista;
-    while(aux != NULL){
-        strcpy(op, aux->inst->op);
-        //printf("OP %s\n", op);
-        if(strcmp(op, "+") == 0){
-            strcpy(strop, "SUM");
-        }
-        else if(strcmp(op, "-") == 0){
-            strcpy(strop, "SUB");
-        }
-        else if(strcmp(op, "*") == 0){
-            strcpy(strop, "MUL");
-        }
-        else if(strcmp(op, "/") == 0){
-            strcpy(strop, "DIV");
-        }
-        else{
-            strcpy(strop, "");
-        }
-        if(strcmp(op, "PRINT")==0){
-            fprintf(out, "%.3d: PRINT %s\n", aux->number, aux->inst->res);
-        }
-        else if(strcmp(op, "CONDICIONAL-If")==0){
-            fprintf(out, "%.3d: if %s GOTO %s\n", aux->number, aux->inst->res, aux->inst->arg1);
-        }
-        else if(strcmp(op, "Rotulo")==0){
-            fprintf(out, "%.3d: %s\n", aux->number, aux->inst->arg1);
-        }
-        else if(op!=NULL)
-            fprintf(out, "%.3d: %s := %s %s %s\n", aux->number, aux->inst->res, aux->inst->arg1, strop, aux->inst->arg2);
-        else
-            fprintf(out, "%.3d: %s := %s\n", aux->number, aux->inst->res, aux->inst->arg1);
-        aux = aux->next;
-    }
-    fclose(out);
+    printf("criar a função para print");
 
 }
 
