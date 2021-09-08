@@ -36,6 +36,17 @@ void print_tac(FILE* out, struct node_tac * code){
     printf("criar a função para print");
     printf()
 
+    while(1){
+
+        if()
+        struct tac * aux =
+        printf("%c", code->
+
+
+
+
+    }
+
 
 }
 
