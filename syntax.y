@@ -339,10 +339,10 @@ declarationExpression:
 
         	char *temp=(char*)malloc(8*sizeof(char));
                 struct tac* new_tac = create_inst_tac(temp, $1->lexeme, "=" , $2->lexeme);
-               	printf("%s - %s - %s\n", $1->lexeme, $2->lexeme, $3->lexeme);
-                free(temp);
-               	append_inst_tac(&(table_TAC),new_tac);
 
+                free(temp);
+               	//append_inst_tac(&(table_TAC),new_tac);
+		//print_tac(&(table_TAC));
         };
 
 
