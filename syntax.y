@@ -101,7 +101,6 @@
 %left EQUAL NOT_EQUAL GREATER LESS GREATER_OR_EQUAL LESS_OR_EQUAL
 %left SUM SUB MUL DIV MOD EXP ASSIGN
 
-
 %%
 
 cmd: commands{
@@ -309,6 +308,8 @@ arithmeticOperations:
         	$$  = create_node(@1.first_line, 1, "arithmetic_operations", $1, $2, $3, NULL);
 
         	char *temp=(char*)malloc(8*sizeof(char));
+
+       		sprintf(temp,"TEMP%d",1);
                	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
 
                	free(temp);

@@ -41,7 +41,16 @@ void print_tac(struct node_tac * code){
     while(aux2!=NULL){
 
         i = aux2->inst;
-        printf("%s %s %s\n",i->arg1, i->op, i->arg2);
+
+        if(i->res==""){
+
+            printf("%s := %s %s %s\n",i->res, i->arg1, i->op, i->arg2);
+
+        }else{
+
+            printf("%s := %s %s %s\n",i->res, i->arg1, i->op, i->arg2);
+        }
+
         aux2 = aux2 -> next;
     }
 
