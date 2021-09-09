@@ -9,7 +9,7 @@
 	int yydebug=0;
 	extern int yylex();
 	extern Node * syntax_tree;
-	struct node_tac * table_TAC;
+	struct node_tac * table_TAC = NULL;
 	extern FILE* yyin;
 	symbol_t symbol_table;
 	int vars_size=0;
@@ -119,7 +119,11 @@ commands:
 
 	generalArithmeticExpression {
 
-	 	$$ = create_node(@1.first_line, 1, "arithmetic_expression", NULL);  syntax_tree = $$;}|
+	 	$$ = create_node(@1.first_line, 1, "arithmetic_expression", NULL);
+	 	  syntax_tree = $$;
+	 	  print_tac((table_TAC));
+
+	}|
 
 
 	commandIf {
@@ -316,7 +320,7 @@ arithmeticOperations:
 
        	variable{
 
-       		$$  = create_node(@1.first_line, 1, "arithmetic_operations", $1, NULL);}|
+       		$$  = create_node(@1.first_line, 1, "Variable", $1, NULL);}|
 
        	numbers{
 
@@ -337,14 +341,12 @@ declarationExpression:
         	}
 
         	char *temp=(char*)malloc(8*sizeof(char));
-                struct tac* new_tac = create_inst_tac(temp, $1->lexeme, "=" , $2->lexeme);
+
+                struct tac* new_tac = create_inst_tac(temp, $1->lexeme, ":=" , $2->lexeme);
 
                 free(temp);
+		append_inst_tac(&(table_TAC),new_tac);
 
-               	table_TAC = append_inst_tac(&(table_TAC),new_tac);
-
-		print_tac(table_TAC);
-		//printf("%d", &table_TAC);
         };
 
 
@@ -379,27 +381,27 @@ arithmeticOperators:
 
  	SUM{
 
- 		$$  = create_node(@1.first_line, 1, "sum_operation", NULL);}|
+ 		$$  = create_node(@1.first_line, 1, "SUM", NULL);}|
 
  	SUB{
 
- 		$$  = create_node(@1.first_line, 1, "sub_operation", NULL);}|
+ 		$$  = create_node(@1.first_line, 1, "SUB", NULL);}|
 
  	MUL{
 
- 		$$  = create_node(@1.first_line, 1, "mul_operation", NULL);}|
+ 		$$  = create_node(@1.first_line, 1, "MUL", NULL);}|
 
  	DIV{
 
- 		$$  = create_node(@1.first_line, 1, "div_operation", NULL);}|
+ 		$$  = create_node(@1.first_line, 1, "DIV", NULL);}|
 
  	MOD{
 
- 		$$  = create_node(@1.first_line, 1, "mod_operation", NULL);}|
+ 		$$  = create_node(@1.first_line, 1, "MOD", NULL);}|
 
  	EXP{
 
- 		$$  = create_node(@1.first_line, 1, "exp_operation", NULL);};
+ 		$$  = create_node(@1.first_line, 1, "EXP", NULL);};
 
 
 declarationTypes:

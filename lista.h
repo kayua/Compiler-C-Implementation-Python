@@ -78,7 +78,7 @@ void print_tac(struct node_tac * code);
  * @param code lista (possivelmente vazia) inicial, em entrada. Na saida, contem *         a mesma lista, com mais um elemento inserido no fim.
  * @inst  o elemento inserido no fim da lista.
  */
-struct node_tac * append_inst_tac(struct node_tac * code, struct tac * inst);
+void append_inst_tac(struct node_tac ** code, struct tac * inst);
 
 /** Concatena a lista 'code_a' com a lista 'code_b'.
  * @param code_a lista (possivelmente vazia) inicial, em entrada. Na saida, contem

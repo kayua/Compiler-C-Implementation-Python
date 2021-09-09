@@ -28,73 +28,45 @@ struct tac* create_inst_tac(const char* res, const char* arg1, const char* op, c
 
 }
 
-void print_inst_tac(FILE* out, struct tac i){
-    printf("\n");
-}
+void print_inst_tac(FILE* out, struct tac i){ printf("\n"); }
+
 
 void print_tac(struct node_tac * code){
 
-    struct node_tac * aux_node_tac = code;
-    struct tac* aux_tac = NULL;
+    int digito = 0;
 
+    struct node_tac *aux2 = code;
+    struct tac *i;
 
-    while(1){
+    while(aux2!=NULL){
 
-        aux_tac = aux_node_tac->inst;
-
-        if(aux_tac==NULL){
-            break;
-        }
-        printf("%s %s %s", aux_tac->arg1,aux_tac->op, aux_tac->arg2);
-
-        aux_node_tac = aux_node_tac->next;
-
+        i = aux2->inst;
+        printf("%s %s %s\n",i->arg1, i->op, i->arg2);
+        aux2 = aux2 -> next;
     }
-
 
 }
 
+void append_inst_tac(struct node_tac ** code, struct tac * inst){
 
-struct node_tac* append_inst_tac(struct node_tac *code, struct tac * inst){
+    struct node_tac *node = (struct node_tac*)malloc(sizeof(struct node_tac));
+    node->inst = inst;
+    node->next = NULL;
 
-    struct node_tac *new_node_tac = (struct node_tac*)malloc(sizeof(struct node_tac));
-    struct node_tac *table_tac = code;
-    struct node_tac *p = NULL;
-    int i = 0;
-
-    new_node_tac->inst = inst;
-    new_node_tac->number = 0;
-
-
-    if(table_tac == NULL){
-
-        new_node_tac->prev = NULL;
-        new_node_tac->next = NULL;
-        printf("Primeira inserção");
-        return new_node_tac;
-
-    }else{
-
-        while(1){
-
-            i = i+1;
-
-            if(table_tac->next == NULL){
-
-                break;
-
-            }
-            printf("Segunda inserção %d", i);
-            table_tac = table_tac->next;
-
-            }
-
-        table_tac->next = new_node_tac;
-        new_node_tac->prev = table_tac;
-        new_node_tac->next = NULL;
-        return code;
-
+    if(*code == NULL){
+        *code = node;
+        node->prev = NULL;
     }
+    else{
+        struct node_tac *aux;
+        aux = *code;
+        while(aux->next!=NULL){
+            aux=aux->next;
+        }
+        aux->next = node;
+        node->prev = aux;
+    }
+
 
 }
 
