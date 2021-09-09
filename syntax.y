@@ -281,7 +281,6 @@ comparisonExpression:
 
         	char *temp=(char*)malloc(8*sizeof(char));
                 struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
-               	printf("%s - %s - %s\n", $1->lexeme, $2->lexeme, $3->lexeme);
                 free(temp);
                 num_temp ++;
                	Temporarias += 8;
@@ -307,7 +306,7 @@ arithmeticOperations:
 
         	char *temp=(char*)malloc(8*sizeof(char));
                	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
-               	printf("%s - %s - %s\n", $1->lexeme, $2->lexeme, $3->lexeme);
+
                	free(temp);
                	num_temp ++;
                	Temporarias += 8;
@@ -341,8 +340,11 @@ declarationExpression:
                 struct tac* new_tac = create_inst_tac(temp, $1->lexeme, "=" , $2->lexeme);
 
                 free(temp);
-               	//append_inst_tac(&(table_TAC),new_tac);
-		//print_tac(&(table_TAC));
+
+               	table_TAC = append_inst_tac(&(table_TAC),new_tac);
+
+		print_tac(table_TAC);
+		//printf("%d", &table_TAC);
         };
 
 
