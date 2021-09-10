@@ -46,12 +46,11 @@ void print_tac(struct node_tac * code, symbol_t table){
         i = aux2->inst;
         printf("\n %s \n", i->arg1);
         entry_t *aux_p = lookup(table, i->arg1);
-
-
+        entry_t *aux_p2 = lookup(table, i->arg2);
 
         if(!strcmp(i->arg1,"int_type")){
 
-            printf("%s: Test(SP) :=  %s(RX)\n",str, i->arg2);
+            printf("%s: %03d(SP) :=  0\n", str, aux_p2->desloc);
 
         }
 
