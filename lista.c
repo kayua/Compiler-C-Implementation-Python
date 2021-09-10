@@ -45,15 +45,18 @@ void print_tac(struct node_tac * code){
         sprintf(str, "%03d", l);
         i = aux2->inst;
 
-        if(strcmp(i->arg1,"int_type")){
+        if(!strcmp(i->arg1,"int_type")){
 
-            printf("%s: %s := %s %s %s\n",str, i->res, i->arg1, i->op, i->arg2);
-
-        }else{
-            printf("%s: Test :=  %s\n",str, i->arg2);
+            printf("%s: Test(SP) :=  %s(RX)\n",str, i->arg2);
 
         }
 
+        if(!strcmp(i->arg1,"SUM") or !strcmp(i->arg1,"MUL") or !strcmp(i->arg1,"DIV") or !strcmp(i->arg1,"SUB")){
+
+            printf("%s: %s(Rx) := %s(SP) %s %s(SP)\n",str, i->res, i->arg1, i->op, i->arg2);
+
+        }
+        //printf("%s: %s := %s %s %s\n",str, i->res, i->arg1, i->op, i->arg2);
         aux2 = aux2 -> next;
         l++;
     }
