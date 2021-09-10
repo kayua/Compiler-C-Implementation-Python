@@ -496,7 +496,7 @@ int main(int argc, char** argv){
         		printf("uso: %s <input_file>. Try again!\n", argv[0]);
         		exit(-1);
         	}
-        	yyin = fopen(argv[1], "r");
+        	yyin = fopen("test.t", "r");
         	if (!yyin) {
         		printf("Uso: %s <input_file>. Could not find %s. Try again!\n",
         				argv[0], argv[1]);
@@ -508,7 +508,7 @@ int main(int argc, char** argv){
         	int result = yyparse();
 
         	if(argc == 3) //testing
-        		uncompile(stdout, syntax_tree);
+        		uncompile(syntax_tree);
         	else
         	{
         		if(!result)
