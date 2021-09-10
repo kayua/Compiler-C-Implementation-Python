@@ -105,49 +105,54 @@
 
 cmd: commands{
 
-	$$ = create_node(@1.first_line, 1, "command", $1, NULL);
+	//$$ = create_node(@1.first_line, 1, "command", $1, NULL);
+	$$ = $1;
 	syntax_tree = $$;
+	print_tac((table_TAC), symbol_table );
 
 	};
 
+
 commands:
 
-	importExpression {
+	importExpression commands {
 
-		$$ = create_node(@1.first_line, 1, "import_expression", NULL); syntax_tree = $$;} |
+		$$ = create_node(@1.first_line, 1, "import_expression", NULL);} |
 
-	generalArithmeticExpression {
+
+	generalArithmeticExpression commands {
 
 	 	$$ = create_node(@1.first_line, 1, "arithmetic_expression", NULL);
-	 	  syntax_tree = $$;
-	 	  print_tac((table_TAC), symbol_table );
+
+
 
 	}|
 
 
-	commandIf {
+	commandIf commands {
 
-		$$ = create_node(@1.first_line, 1, "command_if", $1, NULL);  syntax_tree = $$;}|
-
-
-	whileExpression {
-
-		$$ = create_node(@1.first_line, 1, "while", $1, NULL);  syntax_tree = $$;}|
+		$$ = create_node(@1.first_line, 1, "command_if", $1, NULL);}|
 
 
-	doWhileExpression {
+	whileExpression commands {
 
-                $$ = create_node(@1.first_line, 1, "do_while", $1, NULL);  syntax_tree = $$;}|
-
-
-	forExpression {
-
-                $$ = create_node(@1.first_line, 1, "for", $1, NULL);  syntax_tree = $$;}|
+		$$ = create_node(@1.first_line, 1, "while", $1, NULL);}|
 
 
-	defineExpression {
+	doWhileExpression commands {
 
-        		$$ = create_node(@1.first_line, 1, "define", $1, NULL);  syntax_tree = $$;};
+                $$ = create_node(@1.first_line, 1, "do_while", $1, NULL);}|
+
+
+	forExpression commands{
+
+                $$ = create_node(@1.first_line, 1, "for", $1, NULL);}|
+
+       	{}|
+
+	defineExpression commands {
+
+        		$$ = create_node(@1.first_line, 1, "define", $1, NULL);};
 
 
 importExpression:
@@ -242,7 +247,7 @@ assignmentExpression:
 
     	variable {
 
-		$$  = create_node(@1.first_line, 1, "assignment_expression", $1, NULL);}|
+		$$  = create_node(@1.first_line, 1, $1->lexeme, $1, NULL);}|
 
 	variable ASSIGN arithmeticOperations {
 
@@ -344,7 +349,8 @@ declarationExpression:
 
         	$$  = create_node(@1.first_line, 1, "declaration_expression", $1, $2, NULL);
 
-        	if(checking_declaration_symbol($2->lexeme, $1->lexeme)!=NULL){
+		printf("%s", $1->lexeme);
+        	if(checking_declaration_symbol($2->lexeme, $1->lexeme)==NULL){
 
         		insert_in_symbol_table($2->lexeme, $1->lexeme);
 
@@ -497,24 +503,16 @@ int main(int argc, char** argv){
         		exit(-1);
         	}
         	yyin = fopen("test.t", "r");
+
         	if (!yyin) {
         		printf("Uso: %s <input_file>. Could not find %s. Try again!\n",
         				argv[0], argv[1]);
         		exit(-1);
         	}
 
-        	progname = argv[0];
 
         	int result = yyparse();
+		uncompile(syntax_tree);
 
-        	if(argc == 3) //testing
-        		uncompile(syntax_tree);
-        	else
-        	{
-        		if(!result)
-        			printf("OKAY.\n");
-        		else
-        			printf("ERROR.\n");
-        	}
 
 }

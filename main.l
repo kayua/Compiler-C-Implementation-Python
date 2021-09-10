@@ -45,6 +45,5 @@
 [+-]?([0-9]*[.])?[0-9]+    return VALUE_FLOAT;
 [+-]?([0-9]*[.])?[0-9]+[d] return VALUE_DOUBLE;
 [a-zA-Z][a-zA-Z]*    yylval=strdup(yytext); return WORD;
-\n;
-[ \t]+;
+[\t\n];
 %%

@@ -47,12 +47,7 @@ void print_tac(struct node_tac * code, symbol_t table){
         printf("\n %s \n", i->arg1);
         entry_t *aux_p = lookup(table, i->arg1);
 
-        if(aux_p!=NULL){
-            printf("%s", aux_p->name);
-        }else{
 
-            printf("Saida");
-        }
 
         if(!strcmp(i->arg1,"int_type")){
 
@@ -62,17 +57,18 @@ void print_tac(struct node_tac * code, symbol_t table){
 
         if(!strcmp(i->op,"SUM") || !strcmp(i->op,"MUL") || !strcmp(i->op,"DIV") || !strcmp(i->op,"SUB")){
 
+            if(aux_p!=NULL){
             if(strcmp(i->arg2,"arithmetic_operations")){
 
-                printf("%s: %s(Rx) := %s(SP) %s %s(SP)\n",str, i->res, i->arg1, i->op, i->arg2);
+                printf("%s: %s(Rx) := %03d(SP) %s %s(SP)\n",str, i->res, aux_p->desloc, i->op, i->arg2);
 
             }else{
 
-                printf("%s: %s(Rx) := %s(SP) %s %s(RX)\n",str, i->res, i->arg1, i->op, i->arg2);
+                printf("%s: %s(Rx) := %03d(SP) %s %s(RX)\n",str, i->res, aux_p->desloc, i->op, i->arg2);
             }
 
-        }
-        printf("%s: %s := %s %s %s\n",str, i->res, i->arg1, i->op, i->arg2);
+        }}
+
         aux2 = aux2 -> next;
         l++;
     }
