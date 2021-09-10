@@ -39,13 +39,20 @@ void print_tac(struct node_tac * code, symbol_t table){
     struct tac *i;
     int l=0;
     char str[5];
-    lookup(symbol_t table, char* name)
+
     while(aux2!=NULL){
 
         sprintf(str, "%03d", l);
         i = aux2->inst;
-
+        printf("\n %s \n", i->arg1);
         entry_t *aux_p = lookup(table, i->arg1);
+
+        if(aux_p!=NULL){
+            printf("%s", aux_p->name);
+        }else{
+
+            printf("Saida");
+        }
 
         if(!strcmp(i->arg1,"int_type")){
 

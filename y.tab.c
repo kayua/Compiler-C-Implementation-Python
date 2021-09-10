@@ -1645,7 +1645,7 @@ yyreduce:
 
 	 	(yyval.no) = create_node((yylsp[0]).first_line, 1, "arithmetic_expression", NULL);
 	 	  syntax_tree = (yyval.no);
-	 	  print_tac((table_TAC));
+	 	  print_tac((table_TAC), symbol_table);
 
 	}
 #line 1652 "y.tab.c"

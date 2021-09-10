@@ -72,7 +72,7 @@ struct node_tac {
  *   999:  ultima_instrucao
  *   000:  agora_tem_instrucao_demais
  */
-void print_tac(struct node_tac * code);
+void print_tac(struct node_tac * code, symbol_t table);
 
 /** Insere no fim da lista 'code' o elemento 'inst'.
  * @param code lista (possivelmente vazia) inicial, em entrada. Na saida, contem *         a mesma lista, com mais um elemento inserido no fim.
