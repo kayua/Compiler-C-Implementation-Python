@@ -37,21 +37,24 @@ void print_tac(struct node_tac * code){
 
     struct node_tac *aux2 = code;
     struct tac *i;
+    int l=0;
+    char str[5];
 
     while(aux2!=NULL){
-
+        sprintf(str, "%03d", l);
         i = aux2->inst;
 
         if(i->res==""){
 
-            printf("%s := %s %s %s\n",i->res, i->arg1, i->op, i->arg2);
+            printf("%s: %s := %s %s %s\n",str, i->res, i->arg1, i->op, i->arg2);
 
         }else{
 
-            printf("%s := %s %s %s\n",i->res, i->arg1, i->op, i->arg2);
+            printf("%s: %s := %s %s %s\n",str, i->res, i->arg1, i->op, i->arg2);
         }
 
         aux2 = aux2 -> next;
+        l++;
     }
 
 }
