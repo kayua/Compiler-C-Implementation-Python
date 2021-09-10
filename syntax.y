@@ -248,7 +248,14 @@ assignmentExpression:
 
         	Node* a1  = create_node(@1.first_line, 1, "variable", NULL);
         	Node* a2  = create_node(@1.first_line, 1, "assing", NULL);
-        	$$  = create_node(@1.first_line, 1, "assignment_expression", $1,  a1, a2, $3, NULL);};
+        	$$  = create_node(@1.first_line, 1, "assignment_expression", $1,  a1, a2, $3, NULL);
+        	char *temp=(char*)malloc(8*sizeof(char));
+
+                struct tac* new_tac = create_inst_tac(temp, $1->lexeme, "=", $3->lexeme);
+                free(temp);
+                num_temp ++;
+                Temporarias += 8;
+                append_inst_tac(&(table_TAC), new_tac);};
 
 
 boolExpression:
@@ -315,17 +322,19 @@ arithmeticOperations:
                	free(temp);
                	num_temp ++;
                	Temporarias += 8;
-               	append_inst_tac(&(table_TAC),new_tac);
+               	append_inst_tac(&(table_TAC), new_tac);
 
         	}|
 
        	variable{
 
-       		$$  = create_node(@1.first_line, 1, "Variable", $1, NULL);}|
+       		$$  = create_node(@1.first_line, 1, $1->lexeme, $1, NULL);
+
+       		}|
 
        	numbers{
 
-       		$$  = create_node(@1.first_line, 1, "numbers", $1, NULL);};
+       		$$  = create_node(@1.first_line, 1,  $1->lexeme, $1, NULL);};
 
 
 declarationExpression:
@@ -346,7 +355,7 @@ declarationExpression:
                 struct tac* new_tac = create_inst_tac(temp, $1->lexeme, ":=" , $2->lexeme);
 
                 free(temp);
-		append_inst_tac(&(table_TAC),new_tac);
+		append_inst_tac(&(table_TAC), new_tac);
 
         };
 
@@ -454,22 +463,22 @@ variable:
 
 	WORD {
 
-        	$$  = create_node(@1.first_line, 1, "variable", NULL);};
+        	$$  = create_node(@1.first_line, 1, yylval.cadeia, NULL);};
 
 
 numbers:
 
  	VALUE_INT {
 
- 		$$  = create_node(@1.first_line, 1, "int", NULL);}|
+ 		$$  = create_node(@1.first_line, 1, yylval.cadeia, NULL);}|
 
 	VALUE_FLOAT {
 
-		$$  = create_node(@1.first_line, 1, "float", NULL);}|
+		$$  = create_node(@1.first_line, 1, yylval.cadeia, NULL);}|
 
 	VALUE_DOUBLE{
 
-                $$  = create_node(@1.first_line, 1, "float", NULL);
+                $$  = create_node(@1.first_line, 1, yylval.cadeia, NULL);
 	};
 
 

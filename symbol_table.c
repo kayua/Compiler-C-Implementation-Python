@@ -38,16 +38,21 @@ symbol_t* init_table(symbol_t* table) {
 void free_table(symbol_t* table) {
 
     int x = 0;
+
     for(x = 0; x < PRIME; x++) {
+
         if(table->entries[x] != NULL) {
+
             struct table_node_entry * atual = table->entries[x];
             struct table_node_entry * proximo = atual->next;
-
             free(atual);
+
             while(proximo != NULL) {
+
                 atual = proximo;
                 proximo = atual->next;
                 free(atual);
+
             }
 
             table->entries[x] = NULL;
@@ -68,10 +73,14 @@ entry_t* lookup(symbol_t table, char* name) {
         }
 
         if( ! strcmp(name, atual->entry_data->name)) {
+
             return atual->entry_data;
+
         } else {
+
             return NULL;
         }
+
     } else {
 
         return NULL;

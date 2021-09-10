@@ -31,7 +31,7 @@ struct tac* create_inst_tac(const char* res, const char* arg1, const char* op, c
 void print_inst_tac(FILE* out, struct tac i){ printf("\n"); }
 
 
-void print_tac(struct node_tac * code){
+void print_tac(struct node_tac * code, symbol_t table){
 
     int digito = 0;
 
@@ -39,11 +39,13 @@ void print_tac(struct node_tac * code){
     struct tac *i;
     int l=0;
     char str[5];
-
+    lookup(symbol_t table, char* name)
     while(aux2!=NULL){
 
         sprintf(str, "%03d", l);
         i = aux2->inst;
+
+        entry_t *aux_p = lookup(table, i->arg1);
 
         if(!strcmp(i->arg1,"int_type")){
 
@@ -51,12 +53,19 @@ void print_tac(struct node_tac * code){
 
         }
 
-        if(!strcmp(i->arg1,"SUM") || !strcmp(i->arg1,"MUL") || !strcmp(i->arg1,"DIV") || !strcmp(i->arg1,"SUB")){
+        if(!strcmp(i->op,"SUM") || !strcmp(i->op,"MUL") || !strcmp(i->op,"DIV") || !strcmp(i->op,"SUB")){
 
-            printf("%s: %s(Rx) := %s(SP) %s %s(SP)\n",str, i->res, i->arg1, i->op, i->arg2);
+            if(strcmp(i->arg2,"arithmetic_operations")){
+
+                printf("%s: %s(Rx) := %s(SP) %s %s(SP)\n",str, i->res, i->arg1, i->op, i->arg2);
+
+            }else{
+
+                printf("%s: %s(Rx) := %s(SP) %s %s(RX)\n",str, i->res, i->arg1, i->op, i->arg2);
+            }
 
         }
-        //printf("%s: %s := %s %s %s\n",str, i->res, i->arg1, i->op, i->arg2);
+        printf("%s: %s := %s %s %s\n",str, i->res, i->arg1, i->op, i->arg2);
         aux2 = aux2 -> next;
         l++;
     }
