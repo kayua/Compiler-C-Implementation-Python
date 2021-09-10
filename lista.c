@@ -51,7 +51,7 @@ void print_tac(struct node_tac * code){
 
         }
 
-        if(!strcmp(i->arg1,"SUM") or !strcmp(i->arg1,"MUL") or !strcmp(i->arg1,"DIV") or !strcmp(i->arg1,"SUB")){
+        if(!strcmp(i->arg1,"SUM") || !strcmp(i->arg1,"MUL") || !strcmp(i->arg1,"DIV") || !strcmp(i->arg1,"SUB")){
 
             printf("%s: %s(Rx) := %s(SP) %s %s(SP)\n",str, i->res, i->arg1, i->op, i->arg2);
 
