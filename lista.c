@@ -39,6 +39,7 @@ void print_tac(struct node_tac * code, symbol_t table){
     struct tac *i;
     int l=0;
     char str[5];
+    char str_at[100];
 
     while(aux2!=NULL){
 
@@ -46,13 +47,18 @@ void print_tac(struct node_tac * code, symbol_t table){
         i = aux2->inst;
         entry_t *aux_p = lookup(table, i->arg1);
         entry_t *aux_p2 = lookup(table, i->arg2);
+        printf("---> %s\n", i->arg1);
+        printf(" -> %s %s %s \n", i->arg1, i->op, i->arg2);
+        printf("(%s)\n",aux_p->name);
 
-        if(!strcmp(i->op,"DEC")){
-
-            printf("----%s (%s) %s \n", i->arg1, i->op, i->arg2);
+        /* if(!strcmp(i->op,":=") && strcmp(i->arg1, i->arg2) ){
+            memmove(&i->arg2[0], &i->arg2[0 + 1], strlen(i->arg2) - 0);
+            printf(" -> %d %s %s \n", aux_p2->desloc, i->op, i->arg2);
 
         }
-        printf("\n%s (%s) %s \n", i->arg1, i->op, i->arg2);
+        */
+
+        //printf("\n%s (%s) %s \n", i->arg1, i->op, i->arg2);
         /* if(i->arg1[0]=='S'){
             memmove(&i->arg1[0], &i->arg1[0 + 1], strlen(i->arg1) - 0);
             printf("%s: %03d(SP) :=  %s\n", str, aux_p2->desloc, i->arg1);

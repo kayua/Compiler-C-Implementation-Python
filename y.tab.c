@@ -663,9 +663,9 @@ static const yytype_int16 yyrline[] =
        0,   106,   106,   118,   123,   132,   137,   142,   147,   151,
      153,   160,   168,   179,   188,   200,   211,   224,   229,   237,
      241,   248,   252,   268,   282,   286,   293,   306,   310,   318,
-     334,   340,   348,   370,   374,   378,   382,   386,   390,   397,
-     401,   405,   409,   413,   417,   424,   428,   432,   436,   440,
-     447,   451,   458,   462,   469,   477,   483,   487
+     334,   346,   354,   371,   375,   379,   383,   387,   391,   398,
+     402,   406,   410,   414,   418,   425,   429,   433,   437,   441,
+     448,   452,   459,   463,   470,   478,   484,   488
 };
 #endif
 
@@ -1824,7 +1824,7 @@ yyreduce:
         	(yyval.no)  = create_node((yylsp[-2]).first_line, 1, (yyvsp[0].no)->lexeme , (yyvsp[-2].no),  a1, a2, (yyvsp[0].no), NULL);
         	char *temp=(char*)malloc(8*sizeof(char));
 
-                struct tac* new_tac = create_inst_tac(temp, (yyvsp[-2].no)->lexeme, "DEC", (yyvsp[0].no)->lexeme);
+                struct tac* new_tac = create_inst_tac(temp, (yyvsp[-2].no)->lexeme, ":=", (yyvsp[0].no)->lexeme);
                 free(temp);
                 num_temp ++;
                 Temporarias += 8;
@@ -1926,32 +1926,33 @@ yyreduce:
 
        		(yyval.no)  = create_node((yylsp[0]).first_line, 1, (yyvsp[0].no)->lexeme, (yyvsp[0].no), NULL);
 
+                        	if(checking_declaration_symbol((yyvsp[0].no)->lexeme, (yyvsp[0].no)->lexeme)==NULL){
+
+                        		insert_in_symbol_table((yyvsp[0].no)->lexeme, "var");
+
+                        	}
+
        		}
-#line 1931 "y.tab.c"
+#line 1937 "y.tab.c"
     break;
 
   case 31:
-#line 340 "syntax.y"
+#line 346 "syntax.y"
                {
 		printf("Numero id");
 
        		(yyval.no)  = create_node((yylsp[0]).first_line, 1,  (yyvsp[0].no)->lexeme, (yyvsp[0].no), NULL);}
-#line 1940 "y.tab.c"
+#line 1946 "y.tab.c"
     break;
 
   case 32:
-#line 348 "syntax.y"
+#line 354 "syntax.y"
                                               {
 
 
         	(yyval.no)  = create_node((yylsp[-1]).first_line, 1, (yyvsp[0].no)->lexeme, (yyvsp[0].no), NULL);
 
 
-        	if(checking_declaration_symbol((yyvsp[0].no)->lexeme, (yyvsp[-1].no)->lexeme)==NULL){
-
-        		insert_in_symbol_table((yyvsp[0].no)->lexeme, (yyvsp[-1].no)->lexeme);
-
-        	}
 
         	char *temp=(char*)malloc(8*sizeof(char));
 
@@ -1959,214 +1960,214 @@ yyreduce:
 
                 free(temp);
 		append_inst_tac(&(table_TAC), new_tac);}
-#line 1963 "y.tab.c"
+#line 1964 "y.tab.c"
     break;
 
   case 33:
-#line 370 "syntax.y"
+#line 371 "syntax.y"
               {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "equal_operator", NULL);}
-#line 1971 "y.tab.c"
+#line 1972 "y.tab.c"
     break;
 
   case 34:
-#line 374 "syntax.y"
+#line 375 "syntax.y"
                  {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "not_equal_operator", NULL);}
-#line 1979 "y.tab.c"
+#line 1980 "y.tab.c"
     break;
 
   case 35:
-#line 378 "syntax.y"
+#line 379 "syntax.y"
                {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "greater_operator", NULL);}
-#line 1987 "y.tab.c"
+#line 1988 "y.tab.c"
     break;
 
   case 36:
-#line 382 "syntax.y"
+#line 383 "syntax.y"
             {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "less_operator", NULL);}
-#line 1995 "y.tab.c"
+#line 1996 "y.tab.c"
     break;
 
   case 37:
-#line 386 "syntax.y"
+#line 387 "syntax.y"
                         {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "greater_or_equal_operator", NULL);}
-#line 2003 "y.tab.c"
+#line 2004 "y.tab.c"
     break;
 
   case 38:
-#line 390 "syntax.y"
+#line 391 "syntax.y"
                      {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "less_or_equal_operator", NULL);}
-#line 2011 "y.tab.c"
+#line 2012 "y.tab.c"
     break;
 
   case 39:
-#line 397 "syntax.y"
+#line 398 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "SUM", NULL);}
-#line 2019 "y.tab.c"
+#line 2020 "y.tab.c"
     break;
 
   case 40:
-#line 401 "syntax.y"
+#line 402 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "SUB", NULL);}
-#line 2027 "y.tab.c"
+#line 2028 "y.tab.c"
     break;
 
   case 41:
-#line 405 "syntax.y"
+#line 406 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "MUL", NULL);}
-#line 2035 "y.tab.c"
+#line 2036 "y.tab.c"
     break;
 
   case 42:
-#line 409 "syntax.y"
+#line 410 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "DIV", NULL);}
-#line 2043 "y.tab.c"
+#line 2044 "y.tab.c"
     break;
 
   case 43:
-#line 413 "syntax.y"
+#line 414 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "MOD", NULL);}
-#line 2051 "y.tab.c"
+#line 2052 "y.tab.c"
     break;
 
   case 44:
-#line 417 "syntax.y"
+#line 418 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "EXP", NULL);}
-#line 2059 "y.tab.c"
+#line 2060 "y.tab.c"
     break;
 
   case 45:
-#line 424 "syntax.y"
+#line 425 "syntax.y"
             {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "int_type", NULL);}
-#line 2067 "y.tab.c"
+#line 2068 "y.tab.c"
     break;
 
   case 46:
-#line 428 "syntax.y"
+#line 429 "syntax.y"
              {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "float_type", NULL);}
-#line 2075 "y.tab.c"
+#line 2076 "y.tab.c"
     break;
 
   case 47:
-#line 432 "syntax.y"
+#line 433 "syntax.y"
             {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "char_type", NULL);}
-#line 2083 "y.tab.c"
+#line 2084 "y.tab.c"
     break;
 
   case 48:
-#line 436 "syntax.y"
+#line 437 "syntax.y"
             {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "bool_type", NULL);}
-#line 2091 "y.tab.c"
+#line 2092 "y.tab.c"
     break;
 
   case 49:
-#line 440 "syntax.y"
+#line 441 "syntax.y"
               {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "double_type", NULL);}
-#line 2099 "y.tab.c"
+#line 2100 "y.tab.c"
     break;
 
   case 50:
-#line 447 "syntax.y"
+#line 448 "syntax.y"
             {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "and_operator", NULL);}
-#line 2107 "y.tab.c"
+#line 2108 "y.tab.c"
     break;
 
   case 51:
-#line 451 "syntax.y"
+#line 452 "syntax.y"
           {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "or_operator", NULL);}
-#line 2115 "y.tab.c"
+#line 2116 "y.tab.c"
     break;
 
   case 52:
-#line 458 "syntax.y"
+#line 459 "syntax.y"
              {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "true", NULL);}
-#line 2123 "y.tab.c"
+#line 2124 "y.tab.c"
     break;
 
   case 53:
-#line 462 "syntax.y"
+#line 463 "syntax.y"
              {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "false", NULL);}
-#line 2131 "y.tab.c"
+#line 2132 "y.tab.c"
     break;
 
   case 54:
-#line 469 "syntax.y"
+#line 470 "syntax.y"
              {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, yylval.cadeia, NULL);}
-#line 2139 "y.tab.c"
+#line 2140 "y.tab.c"
     break;
 
   case 55:
-#line 477 "syntax.y"
+#line 478 "syntax.y"
                   {
 
 		char sMensagem[100] = "S";
               	strcat(sMensagem, yylval.cadeia);
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, sMensagem, NULL);}
-#line 2149 "y.tab.c"
+#line 2150 "y.tab.c"
     break;
 
   case 56:
-#line 483 "syntax.y"
+#line 484 "syntax.y"
                     {
 
 		(yyval.no)  = create_node((yylsp[0]).first_line, 1, yylval.cadeia, NULL);}
-#line 2157 "y.tab.c"
+#line 2158 "y.tab.c"
     break;
 
   case 57:
-#line 487 "syntax.y"
+#line 488 "syntax.y"
                     {
 
                 (yyval.no)  = create_node((yylsp[0]).first_line, 1, yylval.cadeia, NULL);
 	}
-#line 2166 "y.tab.c"
+#line 2167 "y.tab.c"
     break;
 
 
-#line 2170 "y.tab.c"
+#line 2171 "y.tab.c"
 
       default: break;
     }
@@ -2404,7 +2405,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 493 "syntax.y"
+#line 494 "syntax.y"
 
 
 void yyerror(const char *str){ fprintf(stderr, "error: %s\n", str);}
