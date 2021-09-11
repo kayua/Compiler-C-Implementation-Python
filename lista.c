@@ -47,17 +47,18 @@ void print_tac(struct node_tac * code, symbol_t table){
         i = aux2->inst;
         entry_t *aux_p = lookup(table, i->arg1);
         entry_t *aux_p2 = lookup(table, i->arg2);
+
         if(strcmp(i->arg1, i->arg2) ) {
 
             if(i->arg1[0]=='S' && i->arg2[0]!='S'){
 
                 memmove(&i->arg1[0], &i->arg1[0 + 1], strlen(i->arg1) - 0);
-                printf(" -> %s %s %s \n", i->arg1, i->op, i->arg2);
+                printf(" -> %s %s %03d \n", i->arg1, i->op, aux_p2->desloc);
             }
             if(i->arg2[0]=='S' && i->arg1[0]!='S'){
 
                 memmove(&i->arg2[0], &i->arg2[0 + 1], strlen(i->arg2) - 0);
-                printf(" -> %s %s %s \n", i->arg1, i->op, i->arg2);
+                printf(" -> %03d %s %s \n", aux_p->desloc, i->op, i->arg2);
             }
 
             if(i->arg1[0]=='S' && i->arg2[0]=='S'){
@@ -68,7 +69,7 @@ void print_tac(struct node_tac * code, symbol_t table){
             }
 
 
-            printf(" -> %s %s %s \n", i->arg1, i->op, i->arg2);
+
             /*
             else{
 
