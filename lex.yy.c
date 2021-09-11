@@ -956,7 +956,7 @@ return FALSE;
 case 35:
 YY_RULE_SETUP
 #line 44 "main.l"
-return VALUE_INT;
+yylval=strdup(yytext); return VALUE_INT;
 	YY_BREAK
 case 36:
 YY_RULE_SETUP

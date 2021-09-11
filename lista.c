@@ -47,8 +47,23 @@ void print_tac(struct node_tac * code, symbol_t table){
         entry_t *aux_p = lookup(table, i->arg1);
         entry_t *aux_p2 = lookup(table, i->arg2);
 
-        if(!strcmp(i->arg1,"int_type")){ printf("%s: %03d(SP) :=  0\n", str, aux_p2->desloc);}
+        if(!strcmp(i->op,"DEC")){
 
+            printf("----%s (%s) %s \n", i->arg1, i->op, i->arg2);
+
+        }
+        printf("\n%s (%s) %s \n", i->arg1, i->op, i->arg2);
+        /* if(i->arg1[0]=='S'){
+            memmove(&i->arg1[0], &i->arg1[0 + 1], strlen(i->arg1) - 0);
+            printf("%s: %03d(SP) :=  %s\n", str, aux_p2->desloc, i->arg1);
+        }else{
+
+
+            printf("1: 1(SP) :=  0\n");
+        }
+    */
+
+    /*
         if(!strcmp(i->op,"SUM") || !strcmp(i->op,"MUL") || !strcmp(i->op,"DIV") || !strcmp(i->op,"SUB")){
 
             if(aux_p!=NULL){
@@ -58,11 +73,12 @@ void print_tac(struct node_tac * code, symbol_t table){
                 printf("%s: %s(Rx) := %03d(SP) %s %03d(SP)\n",str, i->res, aux_p->desloc, i->op, aux_p2->desloc);
 
             }else{
-                printf("sssssssssssssssssss");
+
                 //printf("%s: %s(Rx) := %03d(SP) %s %03d(RX)\n",str, i->res, aux_p->desloc, i->op, aux_p2->desloc);
             }
 
         }}
+        */
 
         aux2 = aux2 -> next;
         l++;

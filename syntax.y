@@ -253,10 +253,10 @@ assignmentExpression:
 
         	Node* a1  = create_node(@1.first_line, 1, "variable", NULL);
         	Node* a2  = create_node(@1.first_line, 1, "assing", NULL);
-        	$$  = create_node(@1.first_line, 1, "assignment_expression", $1,  a1, a2, $3, NULL);
+        	$$  = create_node(@1.first_line, 1, $3->lexeme , $1,  a1, a2, $3, NULL);
         	char *temp=(char*)malloc(8*sizeof(char));
 
-                struct tac* new_tac = create_inst_tac(temp, $1->lexeme, "=", $3->lexeme);
+                struct tac* new_tac = create_inst_tac(temp, $1->lexeme, "DEC", $3->lexeme);
                 free(temp);
                 num_temp ++;
                 Temporarias += 8;
@@ -338,6 +338,7 @@ arithmeticOperations:
        		}|
 
        	numbers{
+		printf("Numero id");
 
        		$$  = create_node(@1.first_line, 1,  $1->lexeme, $1, NULL);};
 
@@ -347,7 +348,7 @@ declarationExpression:
  	declarationTypes assignmentExpression {
 
 
-        	$$  = create_node(@1.first_line, 1, "declaration_expression", $1, $2, NULL);
+        	$$  = create_node(@1.first_line, 1, $2->lexeme, $2, NULL);
 
 
         	if(checking_declaration_symbol($2->lexeme, $1->lexeme)==NULL){
@@ -358,12 +359,10 @@ declarationExpression:
 
         	char *temp=(char*)malloc(8*sizeof(char));
 
-                struct tac* new_tac = create_inst_tac(temp, $1->lexeme, ":=" , $2->lexeme);
+                struct tac* new_tac = create_inst_tac(temp, $2->lexeme, ":=" , $2->lexeme);
 
                 free(temp);
-		append_inst_tac(&(table_TAC), new_tac);
-
-        };
+		append_inst_tac(&(table_TAC), new_tac);};
 
 
 comparisonOperators:
@@ -474,9 +473,12 @@ variable:
 
 numbers:
 
+
  	VALUE_INT {
 
- 		$$  = create_node(@1.first_line, 1, yylval.cadeia, NULL);}|
+		char sMensagem[100] = "S";
+              	strcat(sMensagem, yylval.cadeia);
+ 		$$  = create_node(@1.first_line, 1, sMensagem, NULL);}|
 
 	VALUE_FLOAT {
 
