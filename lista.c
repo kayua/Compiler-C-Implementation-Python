@@ -68,7 +68,12 @@ void print_tac(struct node_tac * code, symbol_t table){
                 printf(" -> %s %s %s \n", i->arg1, i->op, i->arg2);
             }
 
+            if(i->arg1[0]!='S' && i->arg2[0]!='S'){
 
+                printf(" -> %s %s %s \n", i->arg1, i->op, i->arg2);
+            }
+
+            
 
             /*
             else{
