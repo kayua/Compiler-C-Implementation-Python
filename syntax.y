@@ -317,11 +317,14 @@ arithmeticOperations:
 
  	arithmeticOperations arithmeticOperators arithmeticOperations{
 
-        	$$  = create_node(@1.first_line, 1, "arithmetic_operations", $1, $2, $3, NULL);
 
-        	char *temp=(char*)malloc(8*sizeof(char));
+		char *temp=(char*)malloc(8*sizeof(char));
+		sprintf(temp,"TEMP%d",1);
+        	$$  = create_node(@1.first_line, 1, "Temp", $1, $2, $3, NULL);
 
-       		sprintf(temp,"TEMP%d",1);
+
+
+
                	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
 
                	free(temp);
@@ -344,9 +347,8 @@ arithmeticOperations:
        		}|
 
        	numbers{
-		printf("Numero id");
-
-       		$$  = create_node(@1.first_line, 1,  $1->lexeme, $1, NULL);};
+		printf("%s", $1->lexeme);
+       		$$  = $1;};
 
 
 declarationExpression:
