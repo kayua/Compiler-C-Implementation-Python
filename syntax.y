@@ -349,7 +349,7 @@ declarationExpression:
 
         	$$  = create_node(@1.first_line, 1, "declaration_expression", $1, $2, NULL);
 
-		printf("%s", $1->lexeme);
+
         	if(checking_declaration_symbol($2->lexeme, $1->lexeme)==NULL){
 
         		insert_in_symbol_table($2->lexeme, $1->lexeme);

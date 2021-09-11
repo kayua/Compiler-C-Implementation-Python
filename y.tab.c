@@ -1945,7 +1945,7 @@ yyreduce:
 
         	(yyval.no)  = create_node((yylsp[-1]).first_line, 1, "declaration_expression", (yyvsp[-1].no), (yyvsp[0].no), NULL);
 
-		printf("%s", (yyvsp[-1].no)->lexeme);
+
         	if(checking_declaration_symbol((yyvsp[0].no)->lexeme, (yyvsp[-1].no)->lexeme)==NULL){
 
         		insert_in_symbol_table((yyvsp[0].no)->lexeme, (yyvsp[-1].no)->lexeme);
