@@ -1823,7 +1823,7 @@ yyreduce:
         	Node* a2  = create_node((yylsp[-2]).first_line, 1, "assing", NULL);
         	(yyval.no)  = create_node((yylsp[-2]).first_line, 1, (yyvsp[0].no)->lexeme , (yyvsp[-2].no),  a1, a2, (yyvsp[0].no), NULL);
         	char *temp=(char*)malloc(8*sizeof(char));
-		sprintf(temp,"TEMP%d",Temps);
+		sprintf(temp,"T%03d",Temps);
                 struct tac* new_tac = create_inst_tac(temp, (yyvsp[-2].no)->lexeme, ":=", (yyvsp[0].no)->lexeme);
                 free(temp);
                 num_temp ++;
@@ -1906,7 +1906,7 @@ yyreduce:
 
 
 		char *temp=(char*)malloc(8*sizeof(char));
-		sprintf(temp,"TEMP%d",Temps);
+		sprintf(temp,"T%03d",Temps);
         	(yyval.no)  = create_node((yylsp[-2]).first_line, 1, temp, (yyvsp[-2].no), (yyvsp[-1].no), (yyvsp[0].no), NULL);
 
                	struct tac* new_tac = create_inst_tac(temp, (yyvsp[-2].no)->lexeme, (yyvsp[-1].no)->lexeme, (yyvsp[0].no)->lexeme);
