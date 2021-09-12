@@ -87,11 +87,11 @@ void print_tac(struct node_tac * code, symbol_t table){
 
             if(!strcmp(i->op, ":=")){
 
-                printf("-----> %s: %03d(SP) %s %s\n", str, aux_p->desloc, i->op, i->arg2);
+                printf("%s: %03d(SP) %s %s\n", str, aux_p->desloc, i->op, i->arg2);
 
             }else{
 
-                printf("%s: %s := %03d(SP) %s %s\n", str, i->res, aux_p->desloc, i->op, str_at);
+                printf("%s: %s := %03d(SP) %s %s\n", str, i->res, aux_p->desloc, i->op, i->arg2);
 
             }
 
