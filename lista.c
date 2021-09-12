@@ -40,6 +40,7 @@ void print_tac(struct node_tac * code, symbol_t table){
     int l=0;
     char str[5];
     char str_at[100];
+    char str_at2[100];
 
     while(aux2!=NULL){
 
@@ -52,28 +53,54 @@ void print_tac(struct node_tac * code, symbol_t table){
 
             if(i->arg1[0]=='S' && i->arg2[0]!='S'){
 
-                memmove(&i->arg1[0], &i->arg1[0 + 1], strlen(i->arg1) - 0);
-                printf(" -> %s %s %03d \n", i->arg1, i->op, aux_p2->desloc);
+                str_at[0]='\n';
+                strcpy(str_at,i->arg1);
+                memmove(&str_at[0], &str_at[0 + 1], strlen(str_at) - 0);
+                printf("%s: %s %s %03d(SP) \n", str, str_at, i->op, aux_p2->desloc);
             }
+
             if(i->arg2[0]=='S' && i->arg1[0]!='S'){
 
-                memmove(&i->arg2[0], &i->arg2[0 + 1], strlen(i->arg2) - 0);
-                printf(" -> %03d %s %s \n", aux_p->desloc, i->op, i->arg2);
+                str_at[0]='\n';
+                strcpy(str_at,i->arg2);
+                memmove(&str_at[0], &str_at[0 + 1], strlen(str_at) - 0);
+                printf("%s: %03d(SP) %s %s \n", str, aux_p->desloc, i->op, str_at);
             }
 
             if(i->arg1[0]=='S' && i->arg2[0]=='S'){
 
-                memmove(&i->arg2[0], &i->arg2[0 + 1], strlen(i->arg2) - 0);
-                memmove(&i->arg1[0], &i->arg1[0 + 1], strlen(i->arg1) - 0);
-                printf(" -> %s %s %s \n", i->arg1, i->op, i->arg2);
+                str_at[0]='\n';
+                strcpy(str_at,i->arg1);
+
+                str_at2[0]='\n';
+                strcpy(str_at2,i->arg1);
+                memmove(&str_at[0], &str_at[0 + 1], strlen(str_at) - 0);
+                memmove(&str_at2[0], &str_at2[0 + 1], strlen(str_at2) - 0);
+                printf("%s: %s %s %s \n", str, str_at, i->op, str_at2);
             }
 
             if(i->arg1[0]!='S' && i->arg2[0]!='S'){
 
-                printf(" -> %s %s %s \n", i->arg1, i->op, i->arg2);
-            }
 
-            
+                if(strcmp(i->arg1,"Temp") && !strcmp(i->arg2,"Temp")){
+
+                    printf("%s: %03d(SP) %s %s(RX)\n", str, aux_p->desloc, i->op, i->arg2);
+
+                }
+
+                if(!strcmp(i->arg1,"Temp") && strcmp(i->arg2,"Temp")){
+
+                    printf("%s: %s(RX) %s %03d(SP)\n", str, i->arg1, i->op, aux_p2->desloc);
+
+                }
+
+                if(strcmp(i->arg1,"Temp") && strcmp(i->arg2,"Temp") && i->arg1[0]!='S' && i->arg2[0]!='S'){
+
+                    printf("%s: %03d(SP) %s %03d(SP)\n", str, aux_p->desloc, i->op, aux_p2->desloc);
+
+                }
+
+            }
 
             /*
             else{
@@ -119,7 +146,7 @@ void print_tac(struct node_tac * code, symbol_t table){
 
         }}
         */
-
+        printf("%s: %s(SP) %s %s(SP)\n", str, i->arg1, i->op, i->arg2);
         aux2 = aux2 -> next;
         l++;
     }
