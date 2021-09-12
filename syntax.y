@@ -15,7 +15,7 @@
 	int vars_size=0;
 	int temps_size=0;
 	int lex_size=0;
-	int Temporarias = 0;
+	int Temps = 0;
         int num_temp = 0;
 
 	entry_t* create_new_symbol(char *lx, char *type){
@@ -255,11 +255,12 @@ assignmentExpression:
         	Node* a2  = create_node(@1.first_line, 1, "assing", NULL);
         	$$  = create_node(@1.first_line, 1, $3->lexeme , $1,  a1, a2, $3, NULL);
         	char *temp=(char*)malloc(8*sizeof(char));
-
+		sprintf(temp,"TEMP%d",Temps);
+		printf("%s", temp);
                 struct tac* new_tac = create_inst_tac(temp, $1->lexeme, ":=", $3->lexeme);
                 free(temp);
                 num_temp ++;
-                Temporarias += 8;
+
                 append_inst_tac(&(table_TAC), new_tac);};
 
 
@@ -274,7 +275,7 @@ boolExpression:
                        	printf("%s - %s - %s\n", $1->lexeme, $2->lexeme, $3->lexeme);
                        	free(temp);
                      	num_temp ++;
-                       	Temporarias += 8;
+
                        	append_inst_tac(&(table_TAC),new_tac);
 
         	}|
@@ -298,7 +299,7 @@ comparisonExpression:
                 struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
                 free(temp);
                 num_temp ++;
-               	Temporarias += 8;
+
                	append_inst_tac(&(table_TAC),new_tac);
 
         	}|
@@ -319,14 +320,15 @@ arithmeticOperations:
 
 
 		char *temp=(char*)malloc(8*sizeof(char));
-		sprintf(temp,"TEMP%d",1);
-        	$$  = create_node(@1.first_line, 1, "Temp", $1, $2, $3, NULL);
-
+		sprintf(temp,"TEMP%d",Temps);
+		printf("%s", temp);
+        	$$  = create_node(@1.first_line, 1, "TEMP", $1, $2, $3, NULL);
+		Temps++;
                	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
 
                	free(temp);
                	num_temp ++;
-               	Temporarias += 8;
+
                	append_inst_tac(&(table_TAC), new_tac);
 
         	}|
