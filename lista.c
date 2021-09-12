@@ -146,7 +146,7 @@ void print_tac(struct node_tac * code, symbol_t table){
 
         }}
         */
-        printf("%s: %s(SP) %s %s(SP)\n", str, i->arg1, i->op, i->arg2);
+        //printf("%s: %s(SP) %s %s(SP)\n", str, i->arg1, i->op, i->arg2);
         aux2 = aux2 -> next;
         l++;
     }
