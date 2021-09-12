@@ -122,7 +122,7 @@ commands:
 
 	generalArithmeticExpression commands {
 
-	 	$$ = create_node(@1.first_line, 1, "arithmetic_expression", NULL);
+	 	$$ = create_node(@1.first_line, 1, "", NULL);
 
 
 
@@ -356,12 +356,6 @@ declarationExpression:
         	$$  = create_node(@1.first_line, 1, $2->lexeme, $2, NULL);
 
 
-        	char *temp=(char*)malloc(8*sizeof(char));
-
-                //struct tac* new_tac = create_inst_tac(temp, $2->lexeme, ":=" , $2->lexeme);
-
-                //free(temp);
-		//append_inst_tac(&(table_TAC), new_tac);
 
 		};
 
