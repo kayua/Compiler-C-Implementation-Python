@@ -261,7 +261,8 @@ assignmentExpression:
                 free(temp);
                 num_temp ++;
 
-                append_inst_tac(&(table_TAC), new_tac);};
+                append_inst_tac(&(table_TAC), new_tac);
+                Temps++;};
 
 
 boolExpression:
@@ -274,7 +275,6 @@ boolExpression:
                      	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
                        	printf("%s - %s - %s\n", $1->lexeme, $2->lexeme, $3->lexeme);
                        	free(temp);
-                     	num_temp ++;
 
                        	append_inst_tac(&(table_TAC),new_tac);
 
@@ -321,9 +321,8 @@ arithmeticOperations:
 
 		char *temp=(char*)malloc(8*sizeof(char));
 		sprintf(temp,"TEMP%d",Temps);
-		printf("%s", temp);
         	$$  = create_node(@1.first_line, 1, "TEMP", $1, $2, $3, NULL);
-		Temps++;
+
                	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
 
                	free(temp);
@@ -356,8 +355,6 @@ declarationExpression:
 
 
         	$$  = create_node(@1.first_line, 1, $2->lexeme, $2, NULL);
-
-
 
 		};
 

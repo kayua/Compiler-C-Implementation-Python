@@ -62,7 +62,7 @@ void print_tac(struct node_tac * code, symbol_t table){
 
             if(!strcmp(i->op, ":=")){
 
-                printf("--------> %s: %03d(SP) %s %s\n", str, aux_p->desloc, i->op, str_at);
+                printf("%s: %03d(SP) %s %s\n", str, aux_p->desloc, i->op, str_at);
 
             }else{
 
@@ -85,7 +85,16 @@ void print_tac(struct node_tac * code, symbol_t table){
 
         if (i->arg1[0] != 'S' && i->arg2[0] != 'S' && i->arg1[0] != 'T' && i->arg2[0] == 'T' ) {
 
-            printf("%s: %03d(SP) %s %s(Rx)\n", str, aux_p->desloc, i->op, i->res);
+            if(!strcmp(i->op, ":=")){
+
+                printf("-----> %s: %03d(SP) %s %s\n", str, aux_p->desloc, i->op, i->arg2);
+
+            }else{
+
+                printf("%s: %s := %03d(SP) %s %s\n", str, i->res, aux_p->desloc, i->op, str_at);
+
+            }
+
 
         }
 
