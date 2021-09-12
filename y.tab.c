@@ -662,10 +662,10 @@ static const yytype_int16 yyrline[] =
 {
        0,   106,   106,   118,   123,   132,   137,   142,   147,   151,
      153,   160,   168,   179,   188,   200,   211,   224,   229,   237,
-     241,   248,   252,   270,   283,   287,   294,   307,   311,   319,
-     335,   347,   354,   364,   368,   372,   376,   380,   384,   391,
-     395,   399,   403,   407,   411,   418,   422,   426,   430,   434,
-     441,   445,   452,   456,   463,   471,   477,   481
+     241,   248,   252,   269,   282,   286,   293,   306,   310,   318,
+     334,   346,   353,   363,   367,   371,   375,   379,   383,   390,
+     394,   398,   402,   406,   410,   417,   421,   425,   429,   433,
+     440,   444,   451,   455,   462,   470,   476,   480
 };
 #endif
 
@@ -1824,18 +1824,17 @@ yyreduce:
         	(yyval.no)  = create_node((yylsp[-2]).first_line, 1, (yyvsp[0].no)->lexeme , (yyvsp[-2].no),  a1, a2, (yyvsp[0].no), NULL);
         	char *temp=(char*)malloc(8*sizeof(char));
 		sprintf(temp,"TEMP%d",Temps);
-		printf("%s", temp);
                 struct tac* new_tac = create_inst_tac(temp, (yyvsp[-2].no)->lexeme, ":=", (yyvsp[0].no)->lexeme);
                 free(temp);
                 num_temp ++;
 
                 append_inst_tac(&(table_TAC), new_tac);
                 Temps++;}
-#line 1835 "y.tab.c"
+#line 1834 "y.tab.c"
     break;
 
   case 23:
-#line 270 "syntax.y"
+#line 269 "syntax.y"
                                                     {
 
         	(yyval.no)  = create_node((yylsp[-2]).first_line, 1, "bool_expression", (yyvsp[-2].no), (yyvsp[-1].no), (yyvsp[0].no), NULL);
@@ -1848,27 +1847,27 @@ yyreduce:
                        	append_inst_tac(&(table_TAC),new_tac);
 
         	}
-#line 1852 "y.tab.c"
+#line 1851 "y.tab.c"
     break;
 
   case 24:
-#line 283 "syntax.y"
+#line 282 "syntax.y"
              {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "bool", (yyvsp[0].no), NULL);}
-#line 1860 "y.tab.c"
+#line 1859 "y.tab.c"
     break;
 
   case 25:
-#line 287 "syntax.y"
+#line 286 "syntax.y"
                       {
 
                 (yyval.no)  = create_node((yylsp[0]).first_line, 1, "bool_expression", (yyvsp[0].no), NULL);}
-#line 1868 "y.tab.c"
+#line 1867 "y.tab.c"
     break;
 
   case 26:
-#line 294 "syntax.y"
+#line 293 "syntax.y"
                                                                      {
 
         	(yyval.no)  = create_node((yylsp[-2]).first_line, 1, "comparison_expression", (yyvsp[-2].no), (yyvsp[-1].no), (yyvsp[0].no), NULL);
@@ -1881,34 +1880,34 @@ yyreduce:
                	append_inst_tac(&(table_TAC),new_tac);
 
         	}
-#line 1885 "y.tab.c"
+#line 1884 "y.tab.c"
     break;
 
   case 27:
-#line 307 "syntax.y"
+#line 306 "syntax.y"
                 {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "variable", (yyvsp[0].no), NULL);}
-#line 1893 "y.tab.c"
+#line 1892 "y.tab.c"
     break;
 
   case 28:
-#line 311 "syntax.y"
+#line 310 "syntax.y"
                     {
 
         	Node* a1  = create_node((yylsp[-1]).first_line, 1, "NOT", NULL);
         	(yyval.no)  = create_node((yylsp[-1]).first_line, 1, "boolExpression", a1, (yyvsp[0].no), NULL);}
-#line 1902 "y.tab.c"
+#line 1901 "y.tab.c"
     break;
 
   case 29:
-#line 319 "syntax.y"
+#line 318 "syntax.y"
                                                                      {
 
 
 		char *temp=(char*)malloc(8*sizeof(char));
 		sprintf(temp,"TEMP%d",Temps);
-        	(yyval.no)  = create_node((yylsp[-2]).first_line, 1, "TEMP", (yyvsp[-2].no), (yyvsp[-1].no), (yyvsp[0].no), NULL);
+        	(yyval.no)  = create_node((yylsp[-2]).first_line, 1, temp, (yyvsp[-2].no), (yyvsp[-1].no), (yyvsp[0].no), NULL);
 
                	struct tac* new_tac = create_inst_tac(temp, (yyvsp[-2].no)->lexeme, (yyvsp[-1].no)->lexeme, (yyvsp[0].no)->lexeme);
 
@@ -1918,11 +1917,11 @@ yyreduce:
                	append_inst_tac(&(table_TAC), new_tac);
 
         	}
-#line 1922 "y.tab.c"
+#line 1921 "y.tab.c"
     break;
 
   case 30:
-#line 335 "syntax.y"
+#line 334 "syntax.y"
                 {
 
        		(yyval.no)  = create_node((yylsp[0]).first_line, 1, (yyvsp[0].no)->lexeme, (yyvsp[0].no), NULL);
@@ -1934,233 +1933,233 @@ yyreduce:
                         	}
 
        		}
-#line 1938 "y.tab.c"
+#line 1937 "y.tab.c"
     break;
 
   case 31:
-#line 347 "syntax.y"
+#line 346 "syntax.y"
                {
 
        		(yyval.no)  = (yyvsp[0].no);}
-#line 1946 "y.tab.c"
+#line 1945 "y.tab.c"
     break;
 
   case 32:
-#line 354 "syntax.y"
+#line 353 "syntax.y"
                                               {
 
 
         	(yyval.no)  = create_node((yylsp[-1]).first_line, 1, (yyvsp[0].no)->lexeme, (yyvsp[0].no), NULL);
 
 		}
-#line 1957 "y.tab.c"
+#line 1956 "y.tab.c"
     break;
 
   case 33:
-#line 364 "syntax.y"
+#line 363 "syntax.y"
               {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "equal_operator", NULL);}
-#line 1965 "y.tab.c"
+#line 1964 "y.tab.c"
     break;
 
   case 34:
-#line 368 "syntax.y"
+#line 367 "syntax.y"
                  {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "not_equal_operator", NULL);}
-#line 1973 "y.tab.c"
+#line 1972 "y.tab.c"
     break;
 
   case 35:
-#line 372 "syntax.y"
+#line 371 "syntax.y"
                {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "greater_operator", NULL);}
-#line 1981 "y.tab.c"
+#line 1980 "y.tab.c"
     break;
 
   case 36:
-#line 376 "syntax.y"
+#line 375 "syntax.y"
             {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "less_operator", NULL);}
-#line 1989 "y.tab.c"
+#line 1988 "y.tab.c"
     break;
 
   case 37:
-#line 380 "syntax.y"
+#line 379 "syntax.y"
                         {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "greater_or_equal_operator", NULL);}
-#line 1997 "y.tab.c"
+#line 1996 "y.tab.c"
     break;
 
   case 38:
-#line 384 "syntax.y"
+#line 383 "syntax.y"
                      {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, "less_or_equal_operator", NULL);}
-#line 2005 "y.tab.c"
+#line 2004 "y.tab.c"
     break;
 
   case 39:
-#line 391 "syntax.y"
+#line 390 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "SUM", NULL);}
-#line 2013 "y.tab.c"
+#line 2012 "y.tab.c"
     break;
 
   case 40:
-#line 395 "syntax.y"
+#line 394 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "SUB", NULL);}
-#line 2021 "y.tab.c"
+#line 2020 "y.tab.c"
     break;
 
   case 41:
-#line 399 "syntax.y"
+#line 398 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "MUL", NULL);}
-#line 2029 "y.tab.c"
+#line 2028 "y.tab.c"
     break;
 
   case 42:
-#line 403 "syntax.y"
+#line 402 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "DIV", NULL);}
-#line 2037 "y.tab.c"
+#line 2036 "y.tab.c"
     break;
 
   case 43:
-#line 407 "syntax.y"
+#line 406 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "MOD", NULL);}
-#line 2045 "y.tab.c"
+#line 2044 "y.tab.c"
     break;
 
   case 44:
-#line 411 "syntax.y"
+#line 410 "syntax.y"
            {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "EXP", NULL);}
-#line 2053 "y.tab.c"
+#line 2052 "y.tab.c"
     break;
 
   case 45:
-#line 418 "syntax.y"
+#line 417 "syntax.y"
             {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "int_type", NULL);}
-#line 2061 "y.tab.c"
+#line 2060 "y.tab.c"
     break;
 
   case 46:
-#line 422 "syntax.y"
+#line 421 "syntax.y"
              {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "float_type", NULL);}
-#line 2069 "y.tab.c"
+#line 2068 "y.tab.c"
     break;
 
   case 47:
-#line 426 "syntax.y"
+#line 425 "syntax.y"
             {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "char_type", NULL);}
-#line 2077 "y.tab.c"
+#line 2076 "y.tab.c"
     break;
 
   case 48:
-#line 430 "syntax.y"
+#line 429 "syntax.y"
             {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "bool_type", NULL);}
-#line 2085 "y.tab.c"
+#line 2084 "y.tab.c"
     break;
 
   case 49:
-#line 434 "syntax.y"
+#line 433 "syntax.y"
               {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "double_type", NULL);}
-#line 2093 "y.tab.c"
+#line 2092 "y.tab.c"
     break;
 
   case 50:
-#line 441 "syntax.y"
+#line 440 "syntax.y"
             {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "and_operator", NULL);}
-#line 2101 "y.tab.c"
+#line 2100 "y.tab.c"
     break;
 
   case 51:
-#line 445 "syntax.y"
+#line 444 "syntax.y"
           {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "or_operator", NULL);}
-#line 2109 "y.tab.c"
+#line 2108 "y.tab.c"
     break;
 
   case 52:
-#line 452 "syntax.y"
+#line 451 "syntax.y"
              {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "true", NULL);}
-#line 2117 "y.tab.c"
+#line 2116 "y.tab.c"
     break;
 
   case 53:
-#line 456 "syntax.y"
+#line 455 "syntax.y"
              {
 
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, "false", NULL);}
-#line 2125 "y.tab.c"
+#line 2124 "y.tab.c"
     break;
 
   case 54:
-#line 463 "syntax.y"
+#line 462 "syntax.y"
              {
 
         	(yyval.no)  = create_node((yylsp[0]).first_line, 1, yylval.cadeia, NULL);}
-#line 2133 "y.tab.c"
+#line 2132 "y.tab.c"
     break;
 
   case 55:
-#line 471 "syntax.y"
+#line 470 "syntax.y"
                   {
 
 		char sMensagem[100] = "S";
               	strcat(sMensagem, yylval.cadeia);
  		(yyval.no)  = create_node((yylsp[0]).first_line, 1, sMensagem, NULL);}
-#line 2143 "y.tab.c"
+#line 2142 "y.tab.c"
     break;
 
   case 56:
-#line 477 "syntax.y"
+#line 476 "syntax.y"
                     {
 
 		(yyval.no)  = create_node((yylsp[0]).first_line, 1, yylval.cadeia, NULL);}
-#line 2151 "y.tab.c"
+#line 2150 "y.tab.c"
     break;
 
   case 57:
-#line 481 "syntax.y"
+#line 480 "syntax.y"
                     {
 
                 (yyval.no)  = create_node((yylsp[0]).first_line, 1, yylval.cadeia, NULL);
 	}
-#line 2160 "y.tab.c"
+#line 2159 "y.tab.c"
     break;
 
 
-#line 2164 "y.tab.c"
+#line 2163 "y.tab.c"
 
       default: break;
     }
@@ -2398,7 +2397,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 487 "syntax.y"
+#line 486 "syntax.y"
 
 
 void yyerror(const char *str){ fprintf(stderr, "error: %s\n", str);}
