@@ -70,7 +70,7 @@ void print_tac(struct node_tac * code, symbol_t table){
             strcpy(str_at, i->arg1);
             memmove(&str_at[0], &str_at[0 + 1], strlen(str_at) - 0);
 
-            printf("%s: %s(SP) %s %03d(SP)\n", str, str_at, i->op, aux_p2->desloc);
+            printf("%s: %s %s %03d(SP)\n", str, str_at, i->op, aux_p2->desloc);
 
         }
 
