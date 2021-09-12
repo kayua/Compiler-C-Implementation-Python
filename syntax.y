@@ -344,7 +344,7 @@ arithmeticOperations:
        		}|
 
        	numbers{
-		printf("%s", $1->lexeme);
+
        		$$  = $1;};
 
 
@@ -354,7 +354,6 @@ declarationExpression:
 
 
         	$$  = create_node(@1.first_line, 1, $2->lexeme, $2, NULL);
-
 
 
         	char *temp=(char*)malloc(8*sizeof(char));
