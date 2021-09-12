@@ -1,12 +1,5 @@
 int a = 5;
 int b = 6;
 int c = 10;
-int d = 15;
-int result;
+int d;
 int e = a + b * c;
-c = 10 + a + c;
-d = c + d / c * d;
-b = a - c;
-c = b - c;
-result =  a * b * c;
-result = 0;

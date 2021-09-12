@@ -358,10 +358,12 @@ declarationExpression:
 
         	char *temp=(char*)malloc(8*sizeof(char));
 
-                struct tac* new_tac = create_inst_tac(temp, $2->lexeme, ":=" , $2->lexeme);
+                //struct tac* new_tac = create_inst_tac(temp, $2->lexeme, ":=" , $2->lexeme);
 
-                free(temp);
-		append_inst_tac(&(table_TAC), new_tac);};
+                //free(temp);
+		//append_inst_tac(&(table_TAC), new_tac);
+
+		};
 
 
 comparisonOperators:

@@ -49,104 +49,61 @@ void print_tac(struct node_tac * code, symbol_t table){
         entry_t *aux_p = lookup(table, i->arg1);
         entry_t *aux_p2 = lookup(table, i->arg2);
 
-        if(strcmp(i->arg1, i->arg2) ) {
+       /* if(strcmp(i->arg1, i->arg2) ) {
 
-            if(i->arg1[0]=='S' && i->arg2[0]!='S'){
+            if (i->arg1[0] == 'S' && i->arg2[0] != 'S') {
 
-                str_at[0]='\n';
-                strcpy(str_at,i->arg1);
+                str_at[0] = '\n';
+                strcpy(str_at, i->arg1);
                 memmove(&str_at[0], &str_at[0 + 1], strlen(str_at) - 0);
                 printf("%s: %s %s %03d(SP) \n", str, str_at, i->op, aux_p2->desloc);
             }
 
-            if(i->arg2[0]=='S' && i->arg1[0]!='S'){
+            if (i->arg2[0] == 'S' && i->arg1[0] != 'S') {
 
-                str_at[0]='\n';
-                strcpy(str_at,i->arg2);
+                str_at[0] = '\n';
+                strcpy(str_at, i->arg2);
                 memmove(&str_at[0], &str_at[0 + 1], strlen(str_at) - 0);
                 printf("%s: %03d(SP) %s %s \n", str, aux_p->desloc, i->op, str_at);
             }
 
-            if(i->arg1[0]=='S' && i->arg2[0]=='S'){
+            if (i->arg1[0] == 'S' && i->arg2[0] == 'S') {
 
-                str_at[0]='\n';
-                strcpy(str_at,i->arg1);
+                str_at[0] = '\n';
+                strcpy(str_at, i->arg1);
 
-                str_at2[0]='\n';
-                strcpy(str_at2,i->arg1);
+                str_at2[0] = '\n';
+                strcpy(str_at2, i->arg1);
                 memmove(&str_at[0], &str_at[0 + 1], strlen(str_at) - 0);
                 memmove(&str_at2[0], &str_at2[0 + 1], strlen(str_at2) - 0);
                 printf("%s: %s %s %s \n", str, str_at, i->op, str_at2);
             }
 
-            if(i->arg1[0]!='S' && i->arg2[0]!='S'){
+            if (i->arg1[0] != 'S' && i->arg2[0] != 'S') {
 
 
-                if(strcmp(i->arg1,"Temp") && !strcmp(i->arg2,"Temp")){
+                if (strcmp(i->arg1, "Temp") && !strcmp(i->arg2, "Temp")) {
 
                     printf("%s: %03d(SP) %s %s(RX)\n", str, aux_p->desloc, i->op, i->arg2);
 
                 }
 
-                if(!strcmp(i->arg1,"Temp") && strcmp(i->arg2,"Temp")){
+                if (!strcmp(i->arg1, "Temp") && strcmp(i->arg2, "Temp")) {
 
                     printf("%s: %s(RX) %s %03d(SP)\n", str, i->arg1, i->op, aux_p2->desloc);
 
                 }
 
-                if(strcmp(i->arg1,"Temp") && strcmp(i->arg2,"Temp") && i->arg1[0]!='S' && i->arg2[0]!='S'){
+                if (strcmp(i->arg1, "Temp") && strcmp(i->arg2, "Temp") && i->arg1[0] != 'S' && i->arg2[0] != 'S') {
 
                     printf("%s: %03d(SP) %s %03d(SP)\n", str, aux_p->desloc, i->op, aux_p2->desloc);
 
                 }
 
             }
-
-            /*
-            else{
-
-                printf(" -> %s %s %s \n", i->arg1, i->op, i->arg2);
-            }
-    */
-
-        }
-        //printf("(%s)\n",aux_p->name);
-
-        /* if(!strcmp(i->op,":=") && strcmp(i->arg1, i->arg2) ){
-            memmove(&i->arg2[0], &i->arg2[0 + 1], strlen(i->arg2) - 0);
-            printf(" -> %d %s %s \n", aux_p2->desloc, i->op, i->arg2);
-
         }
         */
-
-        //printf("\n%s (%s) %s \n", i->arg1, i->op, i->arg2);
-        /* if(i->arg1[0]=='S'){
-            memmove(&i->arg1[0], &i->arg1[0 + 1], strlen(i->arg1) - 0);
-            printf("%s: %03d(SP) :=  %s\n", str, aux_p2->desloc, i->arg1);
-        }else{
-
-
-            printf("1: 1(SP) :=  0\n");
-        }
-    */
-
-    /*
-        if(!strcmp(i->op,"SUM") || !strcmp(i->op,"MUL") || !strcmp(i->op,"DIV") || !strcmp(i->op,"SUB")){
-
-            if(aux_p!=NULL){
-
-            if(strcmp(i->arg2,"arithmetic_operations")){
-
-                printf("%s: %s(Rx) := %03d(SP) %s %03d(SP)\n",str, i->res, aux_p->desloc, i->op, aux_p2->desloc);
-
-            }else{
-
-                //printf("%s: %s(Rx) := %03d(SP) %s %03d(RX)\n",str, i->res, aux_p->desloc, i->op, aux_p2->desloc);
-            }
-
-        }}
-        */
-        //printf("%s: %s(SP) %s %s(SP)\n", str, i->arg1, i->op, i->arg2);
+        printf("%s: %s(SP) %s %s(SP)\n", str, i->arg1, i->op, i->arg2);
         aux2 = aux2 -> next;
         l++;
     }
