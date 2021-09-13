@@ -665,7 +665,7 @@ static const yytype_int16 yyrline[] =
      241,   248,   252,   269,   282,   286,   293,   306,   310,   318,
      334,   346,   353,   363,   367,   371,   375,   379,   383,   390,
      394,   398,   402,   406,   410,   417,   421,   425,   429,   433,
-     440,   444,   451,   455,   462,   470,   476,   480
+     440,   444,   451,   455,   462,   470,   476,   483
 };
 #endif
 
@@ -2145,21 +2145,26 @@ yyreduce:
 #line 476 "syntax.y"
                     {
 
-		(yyval.no)  = create_node((yylsp[0]).first_line, 1, yylval.cadeia, NULL);}
-#line 2150 "y.tab.c"
+		char sMensagem[100] = "S";
+                strcat(sMensagem, yylval.cadeia);
+
+		(yyval.no)  = create_node((yylsp[0]).first_line, 1, sMensagem, NULL);}
+#line 2153 "y.tab.c"
     break;
 
   case 57:
-#line 480 "syntax.y"
+#line 483 "syntax.y"
                     {
 
-                (yyval.no)  = create_node((yylsp[0]).first_line, 1, yylval.cadeia, NULL);
+		char sMensagem[100] = "S";
+               	strcat(sMensagem, yylval.cadeia);
+                (yyval.no)  = create_node((yylsp[0]).first_line, 1, sMensagem, NULL);
 	}
-#line 2159 "y.tab.c"
+#line 2164 "y.tab.c"
     break;
 
 
-#line 2163 "y.tab.c"
+#line 2168 "y.tab.c"
 
       default: break;
     }
@@ -2397,7 +2402,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 486 "syntax.y"
+#line 491 "syntax.y"
 
 
 void yyerror(const char *str){ fprintf(stderr, "error: %s\n", str);}

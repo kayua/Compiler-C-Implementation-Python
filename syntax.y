@@ -475,11 +475,16 @@ numbers:
 
 	VALUE_FLOAT {
 
-		$$  = create_node(@1.first_line, 1, yylval.cadeia, NULL);}|
+		char sMensagem[100] = "S";
+                strcat(sMensagem, yylval.cadeia);
+
+		$$  = create_node(@1.first_line, 1, sMensagem, NULL);}|
 
 	VALUE_DOUBLE{
 
-                $$  = create_node(@1.first_line, 1, yylval.cadeia, NULL);
+		char sMensagem[100] = "S";
+               	strcat(sMensagem, yylval.cadeia);
+                $$  = create_node(@1.first_line, 1, sMensagem, NULL);
 	};
 
 
