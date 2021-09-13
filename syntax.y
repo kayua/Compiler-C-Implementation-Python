@@ -320,7 +320,7 @@ arithmeticOperations:
 		sprintf(temp,"T%03d",Temps);
         	$$  = create_node(@1.first_line, 1, temp, $1, $2, $3, NULL);
 		char *lex=(char*)malloc(8*sizeof(char));
-        	if(strstr($3->lexeme, "." || $1->lexeme, ".")){ sprintf(lex,"F%s",$2->lexeme);}else{sprintf(lex,"%s",$2->lexeme);}
+        	if(strstr($3->lexeme, ".") || strstr($1->lexeme, ".")){ sprintf(lex,"F%s",$2->lexeme);}else{sprintf(lex,"%s",$2->lexeme);}
                	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, lex, $3->lexeme);
                	free(temp);
                	num_temp ++;

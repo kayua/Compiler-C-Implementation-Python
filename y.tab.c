@@ -1907,7 +1907,7 @@ yyreduce:
 		sprintf(temp,"T%03d",Temps);
         	(yyval.no)  = create_node((yylsp[-2]).first_line, 1, temp, (yyvsp[-2].no), (yyvsp[-1].no), (yyvsp[0].no), NULL);
 		char *lex=(char*)malloc(8*sizeof(char));
-        	if(strstr((yyvsp[0].no)->lexeme, ".")){ sprintf(lex,"F%s",(yyvsp[-1].no)->lexeme);}else{sprintf(lex,"%s",(yyvsp[-1].no)->lexeme);}
+        	if(strstr((yyvsp[0].no)->lexeme, ".") || strstr((yyvsp[-2].no)->lexeme, ".")){ sprintf(lex,"F%s",(yyvsp[-1].no)->lexeme);}else{sprintf(lex,"%s",(yyvsp[-1].no)->lexeme);}
                	struct tac* new_tac = create_inst_tac(temp, (yyvsp[-2].no)->lexeme, lex, (yyvsp[0].no)->lexeme);
                	free(temp);
                	num_temp ++;
