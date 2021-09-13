@@ -961,7 +961,7 @@ yylval=strdup(yytext); return VALUE_INT;
 case 36:
 YY_RULE_SETUP
 #line 45 "main.l"
-return VALUE_FLOAT;
+yylval=strdup(yytext); return VALUE_FLOAT;
 	YY_BREAK
 case 37:
 YY_RULE_SETUP

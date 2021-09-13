@@ -1,8 +1,9 @@
 int a = 5;
 int b = 10;
 int c = 7;
-int d = 0;
+float d = 5.00;
 d = a + 5;
+c = c + 3.00;
 d = b * c * d;
 d = b / c / d;
 a = a + b;

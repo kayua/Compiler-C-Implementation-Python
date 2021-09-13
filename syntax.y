@@ -293,12 +293,10 @@ comparisonExpression:
  	comparisonExpression comparisonOperators comparisonExpression{
 
         	$$  = create_node(@1.first_line, 1, "comparison_expression", $1, $2, $3, NULL);
-
         	char *temp=(char*)malloc(8*sizeof(char));
                 struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
                 free(temp);
                 num_temp ++;
-
                	append_inst_tac(&(table_TAC),new_tac);
 
         	}|
@@ -321,8 +319,20 @@ arithmeticOperations:
 		char *temp=(char*)malloc(8*sizeof(char));
 		sprintf(temp,"T%03d",Temps);
         	$$  = create_node(@1.first_line, 1, temp, $1, $2, $3, NULL);
+		char *lex=(char*)malloc(8*sizeof(char));
 
-               	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, $2->lexeme, $3->lexeme);
+        	if(strstr($3->lexeme, ".")){
+
+			sprintf(lex,"F%s",$2->lexeme);
+			printf("UM float");
+
+		}else{
+
+			sprintf(lex,"%s",$2->lexeme);
+
+		}
+
+               	struct tac* new_tac = create_inst_tac(temp, $1->lexeme, lex, $3->lexeme);
 
                	free(temp);
                	num_temp ++;
